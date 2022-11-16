@@ -11,7 +11,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  bool isSwitched = false;
   int login = 0;
 
   @override
@@ -28,7 +27,6 @@ class _AuthScreenState extends State<AuthScreen> {
                 setState(() {
                   login = 0;
                 });
-                print(isSwitched);
               },
               style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
               child: const Text('login'),
@@ -38,7 +36,6 @@ class _AuthScreenState extends State<AuthScreen> {
                 setState(() {
                   login = 1;
                 });
-                print(isSwitched);
               },
               style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
               child: const Text('signup'),
