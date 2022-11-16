@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecurie/models/user.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_ecurie/screens/horse.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  static const tag = "Home page";
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -18,9 +17,17 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _connected = true;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    switch(index){
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => HorseList(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+        );
+    }
   }
 
   @override
