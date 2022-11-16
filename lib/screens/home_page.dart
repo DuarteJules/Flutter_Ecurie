@@ -3,6 +3,8 @@ import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../models/user_manager.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -23,6 +25,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedIndex = index;
     });
   }
+  @override
+  void initState() {
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,10 @@ class _MyHomePageState extends State<MyHomePage> {
           else
           ElevatedButton.icon(
             onPressed: ()=> {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const AuthScreen())),
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AuthScreen())).then((response) => setState(() => {
+                // If user is connected to see his profile 
+                _connected = true
+              }) ),
             },
             icon: const Icon(Icons.login),
             label: const Text("Se connecter"),
