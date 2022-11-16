@@ -19,19 +19,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List allItems = [];
-
-  Future<List> pegaDados() async {
-    var userCollection = mongodb.getCollection('users');
-    var items = await userCollection.find().toList();
-
-    for (var i = 0; i < items.length; i++) {
-      print((items[i]));
-      allItems.add(items[i]);
-    }
-    return items;
-  }
-
   int _selectedIndex = 2;
 
   bool _connected = false;
@@ -47,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
     var userCollection = mongodb.getCollection('users');
     var listOfUser = await userCollection.find().toList();
     List items = [];
-    // print(listOfUser[1]);
     for (int i = 0; i < listOfUser.length; i++) {
       var userCard =
           UserCard(listOfUser[i]["userName"], listOfUser[i]["email"]);
@@ -55,12 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return items;
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getListUSer(userCards);
-  // }
 
   @override
   Widget build(BuildContext context) {
