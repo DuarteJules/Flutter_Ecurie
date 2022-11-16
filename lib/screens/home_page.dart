@@ -3,10 +3,9 @@ import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../models/user_manager.dart';
 import '../providers/mongodb.dart';
-import '../widgets/user_card.dart';
-import 'package:intl/intl.dart';
+
+import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
 
@@ -23,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 2;
 
   bool _connected = false;
-  List userCards = [];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -31,26 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<List> getListUSer() async {
-    var userCollection = mongodb.getCollection('users');
-    var listOfUser = await userCollection.find().toList();
-    List items = [];
-    for (int i = 0; i < listOfUser.length; i++) {
-      var createdAt = listOfUser[i]["createdAt"];
-      var formattedDate;
-      if (createdAt != null) {
-        formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
-        var userCard = UserCard(
-            listOfUser[i]["userName"], listOfUser[i]["email"], formattedDate);
-        items.add(userCard);
-      } else {
-        var userCard =
-            UserCard(listOfUser[i]["userName"], listOfUser[i]["email"], "null");
-        items.add(userCard);
-      }
-    }
-    return items;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,54 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
             )
         ],
       ),
-      body: FutureBuilder(
-        future: getListUSer(),
-        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return Center(
-                    // child: Text(args.toString())
-                    child: Column(children: <Widget>[
-                      snapshot.data![index],
-                    ]),
-                  );
-                });
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
-              ),
-            ];
-          } else {
-            children = const <Widget>[
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: CircularProgressIndicator(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Awaiting result...'),
-              ),
-            ];
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: children,
-            ),
-          );
-        },
-      ),
+      // This return list delocalised into USERLIST 
+      body: const UserList(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
