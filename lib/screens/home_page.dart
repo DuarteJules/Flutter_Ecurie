@@ -40,15 +40,14 @@ class _MyHomePageState extends State<MyHomePage> {
       var formattedDate;
       if (createdAt != null) {
         formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
-        var userCard =UserCard(listOfUser[i]["userName"], listOfUser[i]["email"], formattedDate);
+        var userCard = UserCard(
+            listOfUser[i]["userName"], listOfUser[i]["email"], formattedDate);
         items.add(userCard);
       } else {
         var userCard =
-          UserCard(listOfUser[i]["userName"], listOfUser[i]["email"], "null");
-          items.add(userCard);
+            UserCard(listOfUser[i]["userName"], listOfUser[i]["email"], "null");
+        items.add(userCard);
       }
-      
-      
     }
     return items;
   }
