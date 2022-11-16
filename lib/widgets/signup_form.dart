@@ -35,12 +35,14 @@ class SignupFormState extends State<SignupForm> {
 
   void _createUser(TextEditingController nameController, TextEditingController mailController, TextEditingController passwordController, TextEditingController imageController) {
     setState(() {
+      var timestamp = DateTime.now();
       var collection = mongodb.getCollection("users");
       collection.insertOne({
         "userName": nameController.text,
         "email": mailController.text,
         "password": passwordController.text,
         "image": imageController.text,
+        "createdAt": timestamp,
       });
     });
   }
