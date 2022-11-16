@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 
-import '../models/user.dart';
+import 'package:flutter_ecurie/models/user.dart';
 import '../providers/mongodb.dart';
 
 // instance of MongoDB
@@ -83,7 +83,9 @@ class LoginFormState extends State<LoginForm> {
                     const SnackBar(content: Text('Votre nom d\'utilisateur ou mot de passe est incorrecte.')),
                   );
                 } else {
-                  UserManager.user = isUserCorrect;
+                  // TODO : retreive role of user
+                  var userLogged = User(isUserCorrect["userName"], isUserCorrect["email"], isUserCorrect["password"], isUserCorrect["image"], 1, []);
+                  UserManager.user = userLogged;
                   Navigator.pop(context);
                 }
               }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user.dart';
+import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 2;
 
-  bool _connected = true;
+  bool _connected = false;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,7 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           else
           ElevatedButton.icon(
-            onPressed: ()=>(print(_connected)),
+            onPressed: ()=> {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AuthScreen())),
+            },
             icon: const Icon(Icons.login),
             label: const Text("Se connecter"),
             style: ElevatedButton.styleFrom(elevation: 0, shape: const StadiumBorder()),
