@@ -24,6 +24,7 @@ class UserCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          // TODO Put img when all users will have correct url img
           // Image(
           //   image: NetworkImage(image, scale: 5),
           // ),
