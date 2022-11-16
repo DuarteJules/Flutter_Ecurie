@@ -8,11 +8,13 @@ class UserCard extends StatelessWidget {
   const UserCard(
     this.name,
     this.mail,
+    this.createdAt,
     // required this.image,
   );
 
   final String name;
   final String mail;
+  final String createdAt;
   // final String image;
 
   @override
@@ -37,6 +39,11 @@ class UserCard extends StatelessWidget {
               ),
               Text(
                 mail,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                createdAt,
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),

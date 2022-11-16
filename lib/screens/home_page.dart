@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/user_manager.dart';
 import '../providers/mongodb.dart';
 import '../widgets/user_card.dart';
+import 'package:intl/intl.dart';
 
 var mongodb = DBConnection.getInstance();
 
@@ -35,9 +36,19 @@ class _MyHomePageState extends State<MyHomePage> {
     var listOfUser = await userCollection.find().toList();
     List items = [];
     for (int i = 0; i < listOfUser.length; i++) {
-      var userCard =
-          UserCard(listOfUser[i]["userName"], listOfUser[i]["email"]);
-      items.add(userCard);
+      var createdAt = listOfUser[i]["createdAt"];
+      var formattedDate;
+      if (createdAt != null) {
+        formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
+        var userCard =UserCard(listOfUser[i]["userName"], listOfUser[i]["email"], formattedDate);
+        items.add(userCard);
+      } else {
+        var userCard =
+          UserCard(listOfUser[i]["userName"], listOfUser[i]["email"], "null");
+          items.add(userCard);
+      }
+      
+      
     }
     return items;
   }
