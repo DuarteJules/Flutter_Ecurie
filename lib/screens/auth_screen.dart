@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/login_form.dart';
 import '../widgets/signup_form.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -16,7 +17,8 @@ class _AuthScreenState extends State<AuthScreen> {
       appBar: AppBar(
         title: Text("test"),
       ),
-       body: const SignupForm()
+       body: const LoginForm()
+      //  body: const SignupForm()
     );
   }
 }
