@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+import 'providers/mongodb.dart';
+
+var mongodb = DBConnection.getInstance();
+void main() async {
+  // LOAD DOTENV 
+  await dotenv.load(fileName: ".env");
+  // CONNECT MONGO 
+  await mongodb.connect();
   runApp(const MyApp());
 }
 
