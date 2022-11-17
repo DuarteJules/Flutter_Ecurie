@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../providers/navigation_bar.dart';
 import '../widgets/login_form.dart';
 import '../widgets/signup_form.dart';
 

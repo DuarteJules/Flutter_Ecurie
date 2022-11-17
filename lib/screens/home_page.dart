@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
+import 'package:flutter_ecurie/screens/course_screen.dart';
 import 'package:flutter_ecurie/widgets/horses_list.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../providers/mongodb.dart';
 
+import '../providers/navigation_bar.dart';
 import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
@@ -30,6 +32,21 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+       switch(_selectedIndex){
+      case 0:
+        // Navigator.pushNamed(context, "/first");
+        break;
+      case 1:
+        Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => const CourseScreen(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+        break;
+    }
     });
   }
 
@@ -116,37 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       )),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.horse),
-            label: 'Chevaux',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book_outlined),
-            label: 'Cours',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.champagneGlasses),
-            label: 'Evênements',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.trophy),
-            label: 'Concours',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
-        selectedIconTheme: IconThemeData(size: 30),
-        unselectedIconTheme: IconThemeData(size: 20),
-      ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: const MyNavigationBar(),
     );
   }
 }
