@@ -35,7 +35,7 @@ class LoginFormState extends State<LoginForm> {
     // print(nameController.text);
     var collection = mongodb.getCollection("users");
     var user = await collection.findOne(
-        {"userName": nameController.text, "password": passwordController.text});
+        {"username": nameController.text, "password": passwordController.text});
     return user;
   }
 
@@ -84,9 +84,10 @@ class LoginFormState extends State<LoginForm> {
                   );
                 } else {
                   // TODO : retreive role of user
-                  var userLogged = User(isUserCorrect["userName"], isUserCorrect["email"], isUserCorrect["password"], isUserCorrect["image"], 1, []);
+                  var userLogged = User(isUserCorrect["username"], isUserCorrect["email"], isUserCorrect["password"], isUserCorrect["image"], 1, []);
                   UserManager.user = userLogged;
-                  Navigator.pop(context);
+                  var userConnected = UserManager.connectUser();
+                  Navigator.pop(context, userConnected);
                 }
               }
             },

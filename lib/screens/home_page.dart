@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user.dart';
+import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -29,7 +30,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             builder: (context) => const AuthScreen()))
                     .then((response) => setState(() => {
                           // If user is connected to see his profile
-                          _connected = true
+                          if (response == true)
+                            {_connected = true}
+                          else
+                            {_connected = false}
                         })),
               },
               icon: const Icon(Icons.login),
@@ -65,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
             )
         ],
       ),
-      // This return list delocalised into USERLIST 
+      // This return list delocalised into USERLIST
       body: const UserList(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

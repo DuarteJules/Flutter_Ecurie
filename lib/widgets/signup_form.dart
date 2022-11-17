@@ -38,7 +38,7 @@ class SignupFormState extends State<SignupForm> {
       var timestamp = DateTime.now();
       var collection = mongodb.getCollection("users");
       collection.insertOne({
-        "userName": nameController.text,
+        "username": nameController.text,
         "email": mailController.text,
         "password": passwordController.text,
         "image": imageController.text,
@@ -115,7 +115,7 @@ class SignupFormState extends State<SignupForm> {
                   const SnackBar(content: Text('Processing Data')),
                 );
                 _createUser(nameController, mailController, passwordController, imageController);
-                Navigator.pop(context);
+                Navigator.pop(context, false);
               }
             },
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
