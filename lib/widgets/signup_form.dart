@@ -39,7 +39,7 @@ class SignupFormState extends State<SignupForm> {
       var collection = mongodb.getCollection("users");
       collection.insertOne({
         "username": nameController.text,
-        "email": mailController.text,
+        "mail": mailController.text,
         "password": passwordController.text,
         "image": imageController.text,
         "createdAt": timestamp,

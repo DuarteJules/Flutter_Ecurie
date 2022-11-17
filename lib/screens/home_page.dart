@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
+import 'package:flutter_ecurie/widgets/horses_list.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -24,11 +25,21 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 2;
 
   bool _connected = false;
+  int login = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState () {
+    super.initState();
+    setState(() {
+      const UserList();
+      });
+    
   }
 
   @override
