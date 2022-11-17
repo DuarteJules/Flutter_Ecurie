@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecurie/screens/event_screen.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/horse.dart';
@@ -55,6 +56,16 @@ class _NavigationBarState extends State<MyNavigationBar> {
                   ),
                 );
         break;
+       case 3:
+         Navigator.pushReplacement(
+           context,
+           PageRouteBuilder(
+             pageBuilder: (context, animation1, animation2) => const EventList(),
+             transitionDuration: Duration.zero,
+             reverseTransitionDuration: Duration.zero,
+           ),
+         );
+         break;
     }
     });
   }
