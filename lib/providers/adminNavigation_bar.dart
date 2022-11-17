@@ -3,6 +3,7 @@ import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/horse.dart';
 import '../screens/course_screen.dart';
+import '../screens/validate_courses.dart';
 
 int _selectedIndex = 2;
 class AdminNavigationBar extends StatefulWidget {
@@ -54,6 +55,18 @@ class _NavigationBarState extends State<AdminNavigationBar> {
                     reverseTransitionDuration: Duration.zero,
                   ),
                 );
+        break;
+      case 5:
+      Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => const ValidateCourses(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+        break;
+      
     }
     });
   }

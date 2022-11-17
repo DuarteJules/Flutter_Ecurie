@@ -54,6 +54,7 @@ class _NavigationBarState extends State<MyNavigationBar> {
                     reverseTransitionDuration: Duration.zero,
                   ),
                 );
+        break;
     }
     });
   }

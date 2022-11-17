@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecurie/models/isAdmin.dart';
 import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
@@ -17,7 +18,6 @@ import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
 bool _connected = false;
-int isAdmin = 0;
 class MyHomePage extends StatefulWidget {
   static const tag = "Home page";
   const MyHomePage({super.key});
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               // See if user is ADMIN
                               if (UserManager.user.role == 2)
                                 {
-                                  isAdmin = 1,
+                                  IsAdmin.admin = 1,
                                 }
                             }
                           else
@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       )),
       // Nav for admin user or not
-      bottomNavigationBar: isAdmin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
     );
   }
 }

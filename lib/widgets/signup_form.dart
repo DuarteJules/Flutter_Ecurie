@@ -129,7 +129,6 @@ class SignupFormState extends State<SignupForm> {
                 // you'd often call a server or save the information in a database.
                 var isUserCreated = await _createUser(nameController,
                     mailController, passwordController, imageController);
-                    print(isUserCreated);
                 if (isUserCreated == false) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
