@@ -1,6 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mongo_dart/mongo_dart.dart';
+
+import '../providers/mongodb.dart';
+import '../screens/validate_courses.dart';
+
+// instance of MongoDB
+var mongodb = DBConnection.getInstance();
 
 class CoursesCard extends StatelessWidget {
   const CoursesCard(
@@ -12,6 +19,8 @@ class CoursesCard extends StatelessWidget {
     this.discipline,
     this.place,
     this.createdAt,
+    this.idCard,
+    this.status,
   );
 
   final String title;
@@ -22,57 +31,101 @@ class CoursesCard extends StatelessWidget {
   final String discipline;
   final String place;
   final String createdAt;
+  final ObjectId idCard;
+  final int status;
+
+  void _acceptCourse(idCard) async {
+    var collection = mongodb.getCollection("courses");
+    await collection.updateOne(
+        where.eq('_id', idCard), ModifierBuilder().set('status', 1));
+  }
+
+  void _declineCourse(idCard) async {
+    var collection = mongodb.getCollection("courses");
+    await collection.deleteOne(<String, Object>{"_id": idCard});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      color: Colors.white54,
+      color: status == 1 ? Colors.greenAccent : Colors.white38,
       child: Column(
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Wrap(
             direction: Axis.vertical,
             children: <Widget>[
               Text(
-                title.toUpperCase(),
+                "Titre: ${title.toUpperCase()}",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
-                description,
+                "Description: $description",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                date,
+                "Date du cours prévue: $date",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                hour,
+                "Heure du cours: $hour",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                duration,
+                "Durée du cours: $duration",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                discipline,
+                "Discipline prévue: $discipline",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                place,
+                "Endroit: $place",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                createdAt,
+                "Cours créé le $createdAt",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (status == 1) {
+                    return;
+                  } else {
+                    _acceptCourse(idCard);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    backgroundColor:
+                        status == 1 ? Colors.white54 : Colors.green),
+                child: const Text('Accepter le cours'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  _declineCourse(idCard);
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const ValidateCourses(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                child: const Text('Refuser le cours'),
               ),
             ],
           )
