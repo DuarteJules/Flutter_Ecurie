@@ -86,6 +86,7 @@ class LoginFormState extends State<LoginForm> {
                   // TODO : retreive role of user
                   var userLogged = User(isUserCorrect["userName"], isUserCorrect["email"], isUserCorrect["password"], isUserCorrect["image"], 1, []);
                   UserManager.user = userLogged;
+                  print(UserManager.user.username);
                   Navigator.pop(context);
                 }
               }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecurie/main.dart';
+import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:flutter_ecurie/models/horse.dart';
@@ -11,19 +13,90 @@ class HorseList extends StatefulWidget {
   @override
   State<HorseList> createState() => _HorseListState();
 }
+const List<String> list = <String>['Dressage', "Saut d'obstacle", 'Endurance', 'Compétition'];
 
 class _HorseListState extends State<HorseList> {
   int _selectedIndex = 0;
   bool _connected = true;
 
-  List<Horse> chevaux = [
-    Horse("Petit tonnerre", "https://www.wall-art.de/out/pictures/generated/product/2/780_780_80/ya1009-wandtattoo-yakari-kleiner-donner-web-einzel.jpg", "", 1, "cheval", "male", "chasse", "yakari", ""),
-    Horse("Petit tonnerre", "https://www.wall-art.de/out/pictures/generated/product/2/780_780_80/ya1009-wandtattoo-yakari-kleiner-donner-web-einzel.jpg", "", 1, "cheval", "male", "chasse", "yakari", ""),
-    Horse("Petit tonnerre", "https://www.wall-art.de/out/pictures/generated/product/2/780_780_80/ya1009-wandtattoo-yakari-kleiner-donner-web-einzel.jpg", "", 1, "cheval", "male", "chasse", "yakari", ""),
-    Horse("Petit tonnerre", "https://www.wall-art.de/out/pictures/generated/product/2/780_780_80/ya1009-wandtattoo-yakari-kleiner-donner-web-einzel.jpg", "", 1, "cheval", "male", "chasse", "yakari", ""),
-  ];
+  late String dropdownValue = list.first;
 
-  bool list = true;
+
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final photoController = TextEditingController();
+  final ageController = TextEditingController();
+  final raceController = TextEditingController();
+  final sexController = TextEditingController();
+  final robeController = TextEditingController();
+  final ownerController = TextEditingController();
+
+  List<Horse> horses = [];
+  List<Horse> displayHorses = [];
+
+  bool allHorses = true;
+
+  void getHorses() async {
+    var collection = mongodb.getCollection("horses");
+    var horsesJson = await collection.find().toList();
+    Horse horse = Horse("", "", "", 1, "", "", "", "", "");
+    setState(() {
+      horsesJson.forEach((element) {
+        horses.add(horse.fromJson(element));
+      });
+    });
+    takeAllHorses();
+  }
+
+  void addHorses() async {
+    var collection = mongodb.getCollection("horses");
+    print(UserManager.user.username);
+    await collection.insertOne({
+      'name' : nameController.text,
+      'age' : ageController.text,
+      'photo' : photoController.text,
+      'robe' : robeController.text,
+      'sex' : sexController.text,
+      'specialty' : dropdownValue,
+      'owner' : UserManager.user.username,
+      'race' : raceController.text,
+      'dp' : ""
+    });
+    setState(() {
+      Horse horse = Horse(nameController.text, photoController.text, robeController.text, int.parse(ageController.text), raceController.text, sexController.text, dropdownValue, UserManager.user.username, "");
+      horses.add(horse);
+    });
+    nameController.text = "";
+    ageController.text = "";
+    photoController.text = "";
+    robeController.text = "";
+    robeController.text = "";
+    sexController.text = "";
+    raceController.text = "";
+  }
+
+  void takeAllHorses(){
+    setState(() {
+      displayHorses.clear();
+      displayHorses.addAll(horses);
+    });
+  }
+  void takeMyHorses(){
+    setState(() {
+      displayHorses.clear();
+      horses.forEach((element) {
+        if(element.owner == UserManager.user.username){
+          displayHorses.add(element);
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getHorses();
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     switch (index) {
@@ -72,54 +145,54 @@ class _HorseListState extends State<HorseList> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Expanded(
-                child:  ListView.builder(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: chevaux.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: 70,
-                      margin: const EdgeInsets.all(3),
-                      child: Center(
-                          child: Card(
-                            elevation: 4,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text("Nom : ${chevaux[index].name}"),
-                                    Text("Race : ${chevaux[index].race}"),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text("Age : ${chevaux[index].age.toString()}"),
-                                    Text("Specialité : ${chevaux[index].specialty}"),
-                                  ],
-                                ),
-                                Image(image: NetworkImage(chevaux[index].photo))
-                              ],
-                            ),
-                          )
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: displayHorses.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    height: 70,
+                    margin: const EdgeInsets.all(3),
+                    child: Center(
+                        child: Card(
+                      elevation: 4,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("Nom : ${displayHorses[index].name}"),
+                              Text("Race : ${displayHorses[index].race}"),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("Age : ${displayHorses[index].age.toString()}"),
+                              Text("Specialité : ${displayHorses[index].specialty}"),
+                            ],
+                          ),
+                          Image(image: NetworkImage(displayHorses[index].photo))
+                        ],
                       ),
-                    );
-                  },
-
-                ),
+                    )),
+                  );
+                },
+              ),
             ),
-
             Container(
               margin: const EdgeInsets.only(bottom: 7.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () => (print("Tout les chevaux")),
+                    onPressed: () => (takeAllHorses()),
                     style: ElevatedButton.styleFrom(
-                        elevation: 0, shape: const StadiumBorder()),
+                        elevation: 0,
+                        shape: const StadiumBorder(),
+                        backgroundColor: allHorses ? Colors.blue : Colors.grey
+                    ),
                     child: const Text("Tous les chevaux"),
                   ),
                   ElevatedButton(
@@ -127,11 +200,135 @@ class _HorseListState extends State<HorseList> {
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
                         shape: const StadiumBorder(),
-                        backgroundColor: list ? Colors.grey : Colors.blue),
+                        backgroundColor: allHorses ? Colors.grey : Colors.blue
+                    ),
                     child: const Text("Mes chevaux"),
                   ),
                   ElevatedButton(
-                    onPressed: () => (print("ajouter un cheval")),
+                    onPressed: () => (showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            AlertDialog(
+                                title:
+                                const Text('Ajouter un cheval'),
+                                content: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 300),
+                                  height: 800,
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      children: <Widget>[
+                                        TextFormField(
+                                          // The validator receives the text that the user has entered.
+                                          decoration: const InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                            labelText: 'Entrer un nom',
+                                          ),
+                                          validator: (value) {if (value == null || value.isEmpty) {
+                                            return "Entrer du texte s'il vous plait";
+                                          }
+                                          },
+                                          controller: nameController,
+                                        ),
+                                        TextFormField(
+                                          // The validator receives the text that the user has entered.
+                                          decoration: const InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                            labelText: 'Entrer une race',
+                                          ),
+                                          validator: (value) {if (value == null || value.isEmpty) {
+                                            return "Entrer du texte s'il vous plait";
+                                          }
+                                          },
+                                          controller: raceController,
+                                        ),
+                                        TextFormField(
+                                          // The validator receives the text that the user has entered.
+                                          decoration: const InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                            labelText: 'Entrer un age',
+                                          ),
+                                          validator: (value) {if (value == null || value.isEmpty) {
+                                            return "Entrer du texte s'il vous plait";
+                                          }
+                                          },
+                                          controller: ageController,
+                                        ),
+                                        TextFormField(
+                                          // The validator receives the text that the user has entered.
+                                          decoration: const InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                            labelText: 'Entrer un sex',
+                                          ),
+                                          validator: (value) {if (value == null || value.isEmpty) {
+                                            return "Entrer du texte s'il vous plait";
+                                          }
+                                          },
+                                          controller: sexController,
+                                        ),
+                                        TextFormField(
+                                          // The validator receives the text that the user has entered.
+                                          decoration: const InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                            labelText: "Entrer le lien d'une photo",
+                                          ),
+                                          validator: (value) {if (value == null || value.isEmpty) {
+                                            return "Entrer du texte s'il vous plait";
+                                          }
+                                          },
+                                          controller: photoController,
+                                        ),
+                                        TextFormField(
+                                          // The validator receives the text that the user has entered.
+                                          decoration: const InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                            labelText: 'Entrer une couleur de robe',
+                                          ),
+                                          validator: (value) {if (value == null || value.isEmpty) {
+                                            return "Entrer du texte s'il vous plait";
+                                          }
+                                          },
+                                          controller: robeController,
+                                        ),
+                                        DropdownButtonFormField<String>(
+                                        value: dropdownValue,
+                                        elevation: 16,
+                                        onChanged: (String? value) {
+                                        // This is called when the user selects an item.
+                                        setState(() {
+                                        dropdownValue = value!;
+                                        });
+                                        },
+                                        items: list.map<DropdownMenuItem<String>>((String value) {
+                                        return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                        );
+                                        }).toList(),
+                                        ),
+                                        Container(
+                                          margin:
+                                          const EdgeInsets.only(top: 10.0),
+                                          child: ElevatedButton(onPressed: () {
+                                            // Validate returns true if the form is valid, or false otherwise.
+                                            if (_formKey.currentState!.validate()) {
+                                              // If the form is valid, display a snackbar. In the real world,
+                                              // you'd often call a server or save the information in a database.
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(content: Text('Processing Data')),
+                                              );
+                                              addHorses();
+                                              Navigator.pop(context);
+                                            }
+                                          },
+                                            style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                                            child: const Text('Submit'),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )))),
                     style: ElevatedButton.styleFrom(
                         elevation: 0, shape: const StadiumBorder()),
                     child: const Text("Ajouter"),
