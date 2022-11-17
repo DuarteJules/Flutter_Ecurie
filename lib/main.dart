@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
-import 'package:flutter_ecurie/screens/profile.dart';
 import 'providers/mongodb.dart';
 
 var mongodb = DBConnection.getInstance();
@@ -25,9 +24,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
 
       ),
-      routes: {
-        MyProfile.tag: (context) => const MyProfile(),
-      },
       debugShowCheckedModeBanner: false,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
