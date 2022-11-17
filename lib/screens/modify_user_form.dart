@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:mongo_dart/mongo_dart.dart' as dart;
+// import 'package:mongo_dart/mongo_dart.dart';
 
 
 import '../providers/mongodb.dart';
@@ -97,15 +98,8 @@ class MyCustomFormState extends State<MyCustomForm> {
       u['image'] = photo;
       u['tel'] = tel;
 
-      await collection.replaceOne(dart.where.eq('username', user.username),{
-        'username': name,
-        'mail': mail,
-        'password': password,
-        'age': age,
-        'image': photo,
-        'tel': tel,
-        'createdAt': u['createdAt']
-      });
+      await collection.updateOne(dart.where.eq('username', user.username),dart.ModifierBuilder().set('username', name).set('mail', mail).set('password', password).set('age', age).set('image', photo).set('tel', tel));
+      
       var userModified = User(name, mail, password, photo, 1, age,  tel );
       UserManager.user = userModified;
     }
