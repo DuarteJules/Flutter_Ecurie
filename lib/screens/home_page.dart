@@ -8,6 +8,7 @@ import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/horse.dart';
 
+import '../providers/adminNavigation_bar.dart';
 import '../providers/mongodb.dart';
 
 import '../providers/navigation_bar.dart';
@@ -16,6 +17,7 @@ import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
 bool _connected = false;
+int isAdmin = 0;
 class MyHomePage extends StatefulWidget {
   static const tag = "Home page";
   const MyHomePage({super.key});
@@ -28,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 2;
 
   
-  int login = 0;
+  int viewFlux = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -51,14 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  @override
-  void initState () {
-    super.initState();
-    setState(() {
-      const UserList();
-      });
-    
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     .then((response) => setState(() => {
                           // If user is connected to see his profile
                           if (response == true)
-                            {_connected = true}
+                            {
+                              _connected = true,
+                              // See if user is ADMIN
+                              if (UserManager.user.role == 2)
+                                {
+                                  isAdmin = 1,
+                                }
+                            }
                           else
                             {_connected = false}
                         })),
@@ -114,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(
             onPressed: () {
               setState(() {
-                login = 0;
+                viewFlux = 0;
               });
             },
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
@@ -123,18 +124,19 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(
             onPressed: () {
               setState(() {
-                login = 1;
+                viewFlux = 1;
               });
             },
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
             child: const Text('Semaines à venir'),
           ),
           Expanded(
-            child: login == 0 ? const NewsCardList() : const HosrsesList(),
+            child: viewFlux == 0 ? const NewsCardList() : const HosrsesList(),
           )
         ],
       )),
-      bottomNavigationBar: const MyNavigationBar(),
+      // Nav for admin user or not
+      bottomNavigationBar: isAdmin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
     );
   }
 }

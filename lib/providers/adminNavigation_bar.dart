@@ -5,14 +5,14 @@ import 'package:flutter_ecurie/screens/horse.dart';
 import '../screens/course_screen.dart';
 
 int _selectedIndex = 2;
-class MyNavigationBar extends StatefulWidget {
-  const MyNavigationBar({ Key? key}) : super(key: key);
+class AdminNavigationBar extends StatefulWidget {
+  const AdminNavigationBar({ Key? key}) : super(key: key);
 
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
 
-class _NavigationBarState extends State<MyNavigationBar> {
+class _NavigationBarState extends State<AdminNavigationBar> {
   
 
   void _onItemTapped(int index) {
@@ -81,6 +81,10 @@ class _NavigationBarState extends State<MyNavigationBar> {
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.trophy),
             label: 'Concours',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_alert_sharp),
+            label: 'AcceptCours',
           ),
         ],
         currentIndex: _selectedIndex,

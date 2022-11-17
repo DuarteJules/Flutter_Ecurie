@@ -53,6 +53,7 @@ class SignupFormState extends State<SignupForm> {
         "image": imageController.text,
         "createdAt": timestamp,
         "tel": "",
+        "role": 1
       });
       Newsfeed().insertNews("L'utilisateur ${nameController.text} a été créé.", 'users');
       return true;
