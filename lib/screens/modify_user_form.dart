@@ -7,7 +7,6 @@ import 'package:mongo_dart/mongo_dart.dart' as dart;
 import '../providers/mongodb.dart';
 
 var mongodb = DBConnection.getInstance();
-var user = UserManager.user;
 
 class ModifyUserForm extends StatefulWidget {
   static const tag = "Modify user form";
@@ -46,6 +45,7 @@ class MyCustomForm extends StatefulWidget {
 }
 
 class MyCustomFormState extends State<MyCustomForm> {
+  var user = UserManager.user;
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final mailController = TextEditingController();
@@ -93,7 +93,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       u['username'] = name;
       u['mail'] = mail;
       u['password'] = password;
-      u['age'] = age != '' ? int.parse(age) : null;
+      u['age'] = age;
       u['image'] = photo;
       u['tel'] = tel;
 
@@ -105,9 +105,11 @@ class MyCustomFormState extends State<MyCustomForm> {
         'image': photo,
         'tel': tel
       });
+      var userModified = User(name, mail, password, photo, 1, age,  tel );
+      UserManager.user = userModified;
     }
 
-    Navigator.pop(context);
+    Navigator.pop(context, UserManager.user);
   }
 
   @override

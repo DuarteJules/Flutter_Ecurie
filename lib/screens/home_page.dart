@@ -91,6 +91,30 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       // This return list delocalised into USERLIST
       body: const UserList(),
+      // body: Center(
+      //       child: Column(
+      //     children: [
+      //       ElevatedButton(
+      //         onPressed: () {
+      //           setState(() {
+      //             login = 0;
+      //           });
+      //         },
+      //         style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+      //         child: const Text('login'),
+      //       ),
+      //       ElevatedButton(
+      //         onPressed: () {
+      //           setState(() {
+      //             login = 1;
+      //           });
+      //         },
+      //         style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+      //         child: const Text('signup'),
+      //       ),
+      //       login == 0 ? const UserList() : const HosrsesList(),
+      //     ],
+      //   )),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

@@ -90,7 +90,7 @@ class LoginFormState extends State<LoginForm> {
                       isUserCorrect["password"],
                       isUserCorrect["image"],
                       1,
-                      isUserCorrect['age'] == '' ? null : isUserCorrect['age'],
+                      isUserCorrect['age'] == "" ? null : isUserCorrect['age'],
                       isUserCorrect['tel'] ?? '');
                   UserManager.user = userLogged;
                   var userConnected = UserManager.connectUser();
