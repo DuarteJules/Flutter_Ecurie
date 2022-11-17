@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../providers/mongodb.dart';
 
 import '../providers/navigation_bar.dart';
+import '../widgets/news_list.dart';
 import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
@@ -129,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Semaines à venir'),
           ),
           Expanded(
-            child: login == 0 ? const UserList() : const HosrsesList(),
+            child: login == 0 ? const NewsCardList() : const HosrsesList(),
           )
         ],
       )),

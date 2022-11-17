@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecurie/services/news_feed.dart';
 
 import '../models/user.dart';
 import '../providers/mongodb.dart';
@@ -47,6 +48,8 @@ class SignupFormState extends State<SignupForm> {
         "tel": "",
       });
     });
+
+    Newsfeed().insertNews("L'utilisateur ${nameController.text} a été créé.", 'users');
   }
   @override
   Widget build(BuildContext context) {
