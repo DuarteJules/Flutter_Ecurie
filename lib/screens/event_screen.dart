@@ -61,7 +61,7 @@ class _EventListState extends State<EventList> {
     var collection = mongodb.getCollection("events");
     await collection.insertOne({
       'theme': themeController.text,
-      'date': dateController.text,
+      'date': DateTime.parse(dateController.text),
       'photo': photoController.text,
       'description': descriptionController.text,
       'title': titleController.text,
@@ -94,14 +94,14 @@ class _EventListState extends State<EventList> {
     await collection.replaceOne({
       'title': oldEvent.title,
       'photo': oldEvent.photo,
-      'date': oldEvent.date,
+      'date': DateTime.parse(oldEvent.date),
       'description': oldEvent.description,
       'theme': oldEvent.theme,
       'status': oldEvent.status
     }, {
       'title': oldEvent.title,
       'photo': oldEvent.photo,
-      'date': oldEvent.date,
+      'date': DateTime.parse(oldEvent.date),
       'description': oldEvent.description,
       'theme': oldEvent.theme,
       'participants': oldEvent.participants,
