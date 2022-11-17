@@ -13,7 +13,7 @@ import '../providers/navigation_bar.dart';
 import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
-
+bool _connected = false;
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -26,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 2;
 
-  bool _connected = false;
+  
   int login = 0;
 
   void _onItemTapped(int index) {
