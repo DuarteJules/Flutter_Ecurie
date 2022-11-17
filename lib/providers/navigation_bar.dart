@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:flutter_ecurie/screens/horse.dart';
 import '../screens/course_screen.dart';
 
 int _selectedIndex = 2;
@@ -25,8 +25,16 @@ class _NavigationBarState extends State<MyNavigationBar> {
       _selectedIndex = index;
        switch(_selectedIndex){
       case 0:
-        // Navigator.pushNamed(context, "/first");
-        break;
+         case 0:
+           Navigator.pushReplacement(
+             context,
+             PageRouteBuilder(
+               pageBuilder: (context, animation1, animation2) => HorseList(),
+               transitionDuration: Duration.zero,
+               reverseTransitionDuration: Duration.zero,
+             ),
+           );
+           break;
       case 1:
         Navigator.pushReplacement(
                     context,
@@ -41,7 +49,7 @@ class _NavigationBarState extends State<MyNavigationBar> {
       Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => const MyHomePage(title: '',),
+                    pageBuilder: (context, animation1, animation2) => const MyHomePage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),

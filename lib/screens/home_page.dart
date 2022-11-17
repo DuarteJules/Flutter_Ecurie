@@ -6,6 +6,7 @@ import 'package:flutter_ecurie/screens/course_screen.dart';
 import 'package:flutter_ecurie/widgets/horses_list.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_ecurie/screens/horse.dart';
 
 import '../providers/mongodb.dart';
 
@@ -15,9 +16,8 @@ import '../widgets/user_list.dart';
 var mongodb = DBConnection.getInstance();
 bool _connected = false;
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  static const tag = "Home page";
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
