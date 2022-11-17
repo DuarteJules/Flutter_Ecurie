@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../providers/mongodb.dart';
+
+// instance of MongoDB
+var mongodb = DBConnection.getInstance();
+
 class CourseForm extends StatefulWidget {
   const CourseForm({Key? key}) : super(key: key);
 
@@ -10,20 +15,50 @@ class CourseForm extends StatefulWidget {
 
 class _CourseFormState extends State<CourseForm> {
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final passwordController = TextEditingController();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final dateController = TextEditingController();
   final hourController = TextEditingController();
+  final durationController = TextEditingController();
+  final disciplineController = TextEditingController();
+  final placeController = TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    nameController.dispose();
-    passwordController.dispose();
     titleController.dispose();
+    descriptionController.dispose();
+    dateController.dispose();
+    hourController.dispose();
+    durationController.dispose();
+    disciplineController.dispose();
+    placeController.dispose();
     super.dispose();
+  }
+
+  static _createCourse(
+      TextEditingController titleController,
+      TextEditingController descriptionController,
+      TextEditingController dateController,
+      TextEditingController hourController,
+      TextEditingController durationController,
+      TextEditingController disciplineController,
+      TextEditingController placeController) async {
+    var collection = mongodb.getCollection("courses");
+    var timestamp = DateTime.now();
+    collection.insertOne({
+      "title": titleController.text,
+      "description": descriptionController.text,
+      "date": dateController.text,
+      "hour": hourController.text,
+      "duration": durationController.text,
+      "discipline": disciplineController.text,
+      "place": placeController.text,
+      "status": 0,
+      "createdAt": timestamp,
+      "teacher": "François",
+      "participants": [],
+    });
   }
 
   @override
@@ -41,20 +76,20 @@ class _CourseFormState extends State<CourseForm> {
           // The validator receives the text that the user has entered.
           decoration: const InputDecoration(
             border: UnderlineInputBorder(),
-            labelText: 'Entrer un nom',
+            labelText: 'Entrez le titre du cours',
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return "Entrer du texte s'il vous plait";
+              return "Entrez du texte s'il vous plait";
             }
           },
-          controller: nameController,
+          controller: titleController,
         ),
         TextField(
           controller: dateController, //editing controller of this TextField
           decoration: const InputDecoration(
               icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "Enter Date" //label text of field
+              labelText: "Chosissez une date" //label text of field
               ),
           readOnly: true, //set it true, so that user will not able to edit text
           onTap: () async {
@@ -65,12 +100,8 @@ class _CourseFormState extends State<CourseForm> {
                     .now(), //DateTime.now() - not to allow to choose before today.
                 lastDate: DateTime(2101));
             if (pickedDate != null) {
-              print(
-                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
               String formattedDate =
                   DateFormat('yyyy-MM-dd').format(pickedDate);
-              print(
-                  formattedDate); //formatted date output using intl package =>  2021-03-16
               setState(() {
                 dateController.text =
                     formattedDate; //set output date to TextField value.
@@ -84,7 +115,7 @@ class _CourseFormState extends State<CourseForm> {
           controller: hourController, //editing controller of this TextField
           decoration: const InputDecoration(
               icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "Enter Hour" //label text of field
+              labelText: "Choisissez une heure" //label text of field
               ),
           readOnly: true, //set it true, so that user will not able to edit text
           onTap: () async {
@@ -107,6 +138,66 @@ class _CourseFormState extends State<CourseForm> {
               });
             }
           },
+        ),
+        TextFormField(
+          // The validator receives the text that the user has entered.
+          decoration: const InputDecoration(
+            border: UnderlineInputBorder(),
+            labelText: 'Entrez la description du cours',
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Entrez du texte s'il vous plait";
+            }
+          },
+          controller: descriptionController,
+        ),
+        TextFormField(
+          // The validator receives the text that the user has entered.
+          decoration: const InputDecoration(
+            border: UnderlineInputBorder(),
+            labelText: 'Entrez la durée du cours',
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Entrez une durée s'il vous plaît";
+            }
+          },
+          controller: durationController,
+        ),
+        TextFormField(
+          // The validator receives the text that the user has entered.
+          decoration: const InputDecoration(
+            border: UnderlineInputBorder(),
+            labelText: 'Entrez la discipline du cours',
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Entrez du texte s'il vous plait";
+            }
+          },
+          controller: disciplineController,
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            // Validate returns true if the form is valid, or false otherwise.
+            if (_formKey.currentState!.validate()) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Le cours a bien été créé')),
+              );
+              await _createCourse(
+                  titleController,
+                  descriptionController,
+                  dateController,
+                  hourController,
+                  durationController,
+                  disciplineController,
+                  placeController);
+              Navigator.pop(context);
+            }
+          },
+          style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+          child: const Text('Submit'),
         ),
       ]),
     );
