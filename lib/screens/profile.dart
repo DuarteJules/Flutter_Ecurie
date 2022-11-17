@@ -47,7 +47,7 @@ class _MyProfileState extends State<MyProfile> {
           Text('téléphone : ${user.tel != '' ? user.tel : 'Non spécifié'}',
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text('age : ${user.age ?? 'Non spécifié'}',
+          Text('age : ${user.age}',
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ElevatedButton.icon(
