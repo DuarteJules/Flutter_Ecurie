@@ -26,11 +26,11 @@ class _UserListState extends State<UserList> {
       if (createdAt != null) {
         formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
         var userCard = UserCard(
-            listOfUser[i]["username"], listOfUser[i]["mail"], formattedDate);
+            listOfUser[i]["username"], listOfUser[i]["mail"], formattedDate, listOfUser[i]["image"]);
         items.add(userCard);
       } else {
         var userCard =
-            UserCard(listOfUser[i]["username"], listOfUser[i]["mail"], "null");
+            UserCard(listOfUser[i]["username"], listOfUser[i]["mail"], "null", listOfUser[i]["image"]);
         items.add(userCard);
       }
     }
