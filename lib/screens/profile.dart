@@ -6,7 +6,9 @@ import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:flutter_ecurie/screens/modify_user_form.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../models/isAdmin.dart';
 import '../models/user.dart';
+import '../providers/adminNavigation_bar.dart';
 
 class MyProfile extends StatefulWidget {
   static const tag = "profile page";
@@ -76,7 +78,8 @@ class _MyProfileState extends State<MyProfile>{
           )
         ]),
       ),
-      bottomNavigationBar: const MyNavigationBar(),
+      // Nav for admin user or not
+      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
     );
   }
 }
