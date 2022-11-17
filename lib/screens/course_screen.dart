@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../providers/navigation_bar.dart';
+import '../widgets/course_form.dart';
 import '../widgets/login_form.dart';
 import '../widgets/signup_form.dart';
 
@@ -12,7 +13,6 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
-  int login = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,14 @@ class _CourseScreenState extends State<CourseScreen> {
       body: Center(
           child: Column(children: [
         ElevatedButton(
-          onPressed: () {
-            print("test");
-            // setState(() {
-            //   login = 0;
-            // });
-          },
-          style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+          onPressed: () => (showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Créez votre cours'),
+                  content: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      height: 800,
+                      child: const CourseForm())))),
           child: const Text('Créer un cours'),
         ),
       ])),
