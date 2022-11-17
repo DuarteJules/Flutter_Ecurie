@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user.dart';
+import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../models/user_manager.dart';
+import '../providers/mongodb.dart';
+
+import '../widgets/user_list.dart';
+
+var mongodb = DBConnection.getInstance();
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -15,7 +20,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int _selectedIndex = 2;
 
   bool _connected = false;
@@ -25,48 +29,47 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedIndex = index;
     });
   }
-  @override
-  void initState() {
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      toolbarHeight: 40,
+        toolbarHeight: 40,
         title: const Text("My little pony"),
         centerTitle: false,
         actions: [
-          if(_connected)
+          if (_connected)
             ElevatedButton.icon(
-              onPressed: ()=>(print(_connected)),
+              onPressed: () => (print(_connected)),
               icon: const Icon(Icons.person),
               label: const Text("profile"),
-              style: ElevatedButton.styleFrom(elevation: 0, shape: const StadiumBorder()),
+              style: ElevatedButton.styleFrom(
+                  elevation: 0, shape: const StadiumBorder()),
             )
           else
-          ElevatedButton.icon(
-            onPressed: ()=> {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const AuthScreen())).then((response) => setState(() => {
-                // If user is connected to see his profile 
-                _connected = true
-              }) ),
-            },
-            icon: const Icon(Icons.login),
-            label: const Text("Se connecter"),
-            style: ElevatedButton.styleFrom(elevation: 0, shape: const StadiumBorder()),
-          )
+            ElevatedButton.icon(
+              onPressed: () => {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AuthScreen()))
+                    .then((response) => setState(() => {
+                          // If user is connected to see his profile
+                          if (response == true)
+                            {_connected = true}
+                          else
+                            {_connected = false}
+                        })),
+              },
+              icon: const Icon(Icons.login),
+              label: const Text("Se connecter"),
+              style: ElevatedButton.styleFrom(
+                  elevation: 0, shape: const StadiumBorder()),
+            )
         ],
       ),
-      body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-          ],
-        ),
-      ),
+      // This return list delocalised into USERLIST
+      body: const UserList(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
