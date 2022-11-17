@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:flutter_ecurie/models/horse.dart';
 
+import '../models/isAdmin.dart';
+import '../providers/adminNavigation_bar.dart';
 import '../providers/mongodb.dart';
 
 var mongodb = DBConnection.getInstance();
@@ -619,7 +621,8 @@ class _HorseListState extends State<HorseList> {
           ],
         ),
       ),
-      bottomNavigationBar: const MyNavigationBar()
+      // Nav for admin user or not
+      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

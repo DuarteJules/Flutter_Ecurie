@@ -3,6 +3,7 @@ import 'package:flutter_ecurie/services/news_feed.dart';
 
 import '../models/user.dart';
 import '../providers/mongodb.dart';
+import '../screens/home_page.dart';
 
 // instance of MongoDB
 var mongodb = DBConnection.getInstance();
@@ -53,6 +54,7 @@ class SignupFormState extends State<SignupForm> {
         "image": imageController.text,
         "createdAt": timestamp,
         "tel": "",
+        "role": 1
       });
       Newsfeed().insertNews("L'utilisateur ${nameController.text} a été créé.", 'users');
       return true;
@@ -128,7 +130,6 @@ class SignupFormState extends State<SignupForm> {
                 // you'd often call a server or save the information in a database.
                 var isUserCreated = await _createUser(nameController,
                     mailController, passwordController, imageController);
-                    print(isUserCreated);
                 if (isUserCreated == false) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -139,7 +140,16 @@ class SignupFormState extends State<SignupForm> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Vous avez bien été crée !')),
                   );
-                  Navigator.pop(context, false);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const MyHomePage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
                 }
               }
             },

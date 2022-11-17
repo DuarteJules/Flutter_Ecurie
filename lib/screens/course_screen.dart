@@ -13,6 +13,7 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
+  int login = 0;
 
   @override
   Widget build(BuildContext context) {

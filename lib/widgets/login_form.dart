@@ -89,7 +89,7 @@ class LoginFormState extends State<LoginForm> {
                       isUserCorrect["mail"],
                       isUserCorrect["password"],
                       isUserCorrect["image"],
-                      1,
+                      isUserCorrect["role"],
                       isUserCorrect['age'],
                       isUserCorrect['tel']);
                   UserManager.user = userLogged;
