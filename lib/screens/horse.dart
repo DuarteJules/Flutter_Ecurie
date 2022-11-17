@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
+import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:flutter_ecurie/models/horse.dart';
@@ -25,8 +26,9 @@ const List<String> list = <String>[
 ];
 
 class _HorseListState extends State<HorseList> {
-  int _selectedIndex = 0;
   bool _connected = UserManager.isUserConnected;
+  late String dropdownValue = list.first;
+  late String DPdropdownValue;
 
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -58,7 +60,6 @@ class _HorseListState extends State<HorseList> {
 
   void addHorses() async {
     var collection = mongodb.getCollection("horses");
-    print(UserManager.user.username);
     await collection.insertOne({
       'name': nameController.text,
       'age': ageController.text,
@@ -68,7 +69,7 @@ class _HorseListState extends State<HorseList> {
       'specialty': dropdownValue,
       'owner': UserManager.user.username,
       'race': raceController.text,
-      'dp': ""
+      'dp': []
     });
     setState(() {
       Horse horse = Horse(
@@ -97,6 +98,17 @@ class _HorseListState extends State<HorseList> {
       displayHorses.clear();
       displayHorses.addAll(horses);
       allHorses = true;
+    });
+  }
+  void takeMyHorses() {
+    setState(() {
+      displayHorses.clear();
+      horses.forEach((element) {
+        if (element.owner == UserManager.user.username) {
+          displayHorses.add(element);
+        }
+      });
+      allHorses = false;
     });
   }
 
@@ -132,16 +144,36 @@ class _HorseListState extends State<HorseList> {
     takeAllHorses();
   }
 
-  void takeMyHorses() {
+  void addDp() async{
+    oldHorse.dp.add(UserManager.user.username);
+    var collection = mongodb.getCollection("horses");
+    await collection.replaceOne({'name' : oldHorse.name,'photo': oldHorse.photo,'robe': oldHorse.robe,'age' : oldHorse.age, 'race' : oldHorse.race, 'sex' : oldHorse.sex, 'specialty' : oldHorse.specialty, 'owner': oldHorse.owner},
+        {
+          'name' : oldHorse.name,
+          'photo': oldHorse.photo,
+          'robe': oldHorse.robe,
+          'age' : oldHorse.age,
+          'race' : oldHorse.race,
+          'sex' : oldHorse.sex,
+          'specialty' : oldHorse.specialty,
+          'owner': oldHorse.owner,
+          'dp' : oldHorse.dp
+        });
     setState(() {
-      displayHorses.clear();
-      horses.forEach((element) {
-        if (element.owner == UserManager.user.username) {
-          displayHorses.add(element);
-        }
-      });
-      allHorses = false;
+      int index = horses.indexWhere((element) =>
+      element.name == oldHorse.name &&
+          element.photo == oldHorse.photo &&
+          element.robe == oldHorse.robe &&
+          element.age == oldHorse.age &&
+          element.race == oldHorse.race &&
+          element.sex == oldHorse.sex &&
+          element.specialty == oldHorse.specialty &&
+          element.owner == oldHorse.owner &&
+          element.dp == oldHorse.dp
+      );
+      horses[index] = oldHorse;
     });
+    takeAllHorses();
   }
 
   @override
@@ -150,23 +182,9 @@ class _HorseListState extends State<HorseList> {
     super.initState();
   }
 
-  void _onItemTapped(int index) {
-    switch (index) {
-      case 2:
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => MyHomePage(),
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-          ),
-        );
-        ;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 40,
@@ -210,7 +228,7 @@ class _HorseListState extends State<HorseList> {
                       elevation: 4,
                       child: InkWell(
                         onTap: ()=>{
-                          if(displayHorses[index].owner == "test3"){
+                          if((displayHorses[index].owner == UserManager.user.username)){
                             oldHorse = Horse(displayHorses[index].name, displayHorses[index].photo, displayHorses[index].robe, displayHorses[index].age, displayHorses[index].race, displayHorses[index].sex , displayHorses[index].specialty, displayHorses[index].owner, displayHorses[index].dp),
                           nameController.text = displayHorses[index].name ,
                           ageController.text = displayHorses[index].age.toString() ,
@@ -219,6 +237,9 @@ class _HorseListState extends State<HorseList> {
                           sexController.text = displayHorses[index].sex ,
                           raceController.text = displayHorses[index].race,
                           dropdownValue = displayHorses[index].specialty,
+                            if(displayHorses[index].dp.isNotEmpty)(
+                                DPdropdownValue = displayHorses[index].dp.first
+                            ),
                           showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
@@ -311,6 +332,10 @@ class _HorseListState extends State<HorseList> {
                                       DropdownButtonFormField<String>(
                                         value: dropdownValue,
                                         elevation: 16,
+                                        decoration: const InputDecoration(
+                                          border: UnderlineInputBorder(),
+                                          labelText: 'Choississez une spécialité',
+                                        ),
                                         onChanged: (String? value) {
                                           // This is called when the user selects an item.
                                           setState(() {
@@ -324,6 +349,28 @@ class _HorseListState extends State<HorseList> {
                                                 child: Text(value),
                                               );
                                             }).toList(),
+                                      ),
+                                      if(displayHorses[index].dp.isNotEmpty)(
+                                          DropdownButtonFormField<String>(
+                                            value: DPdropdownValue,
+                                            elevation: 16,
+                                            decoration: const InputDecoration(
+                                              border: UnderlineInputBorder(),
+                                              labelText: 'Liste des demis pensionnaires de votre cheval',
+                                            ),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                DPdropdownValue = value!;
+                                              });
+                                            },
+                                            items: displayHorses[index].dp.map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                          )
                                       ),
                                       Container(
                                         margin: const EdgeInsets.only(top: 10.0),
@@ -353,6 +400,28 @@ class _HorseListState extends State<HorseList> {
                                   ),
                                 ),
                               )))
+                          }
+                          else{
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Devenir demi pensionnaire'),
+                                    content: const Text("Voulez vous devenir demi pensionnaire de ce cheval ?"),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () =>{
+                                        oldHorse = Horse(displayHorses[index].name, displayHorses[index].photo, displayHorses[index].robe, displayHorses[index].age, displayHorses[index].race, displayHorses[index].sex , displayHorses[index].specialty, displayHorses[index].owner, displayHorses[index].dp),
+                                        addDp(),
+                                          Navigator.pop(context)
+                                        },
+                                        child: const Text("Oui")),
+                                    ElevatedButton(
+                                        onPressed: () =>{
+                                          Navigator.pop(context)
+                                        },
+                                        child: const Text("Non"))
+                                  ],
+                                ))
                           }
                         },
                         child: Row(
@@ -390,7 +459,7 @@ class _HorseListState extends State<HorseList> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () => (print("Tout les chevaux")),
+                    onPressed: () => (takeAllHorses()),
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
                         shape: const StadiumBorder(),
@@ -550,36 +619,7 @@ class _HorseListState extends State<HorseList> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.horse),
-            label: 'Chevaux',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book_outlined),
-            label: 'Cours',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.champagneGlasses),
-            label: 'Evênements',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.trophy),
-            label: 'Concours',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
-        selectedIconTheme: IconThemeData(size: 30),
-        unselectedIconTheme: IconThemeData(size: 20),
-      ),
+      bottomNavigationBar: const MyNavigationBar()
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

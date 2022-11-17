@@ -48,17 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
     }
     });
-    switch(index){
-      case 0:
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => HorseList(),
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-          ),
-        );
-    }
   }
 
   @override
