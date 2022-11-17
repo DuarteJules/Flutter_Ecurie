@@ -22,33 +22,37 @@ class UserCard extends StatelessWidget {
       color: Colors.white54,
       child: Column(
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          const SizedBox(height: 20),
           Image(
-              image: NetworkImage(image, scale: 5),
+              image: NetworkImage(image),
+              fit: BoxFit.fill,
+              height: 200,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                  color: Colors.amber,
+                  color: Colors.white70,
                   alignment: Alignment.center,
                   child: const Image(
                       // IMG URL DIDN'T Work
-                      image: AssetImage('assets/images/testjpeg.jpeg')),
+                      image: AssetImage('assets/images/Image_not_available.png')),
                 );
               }),
           Wrap(
             direction: Axis.vertical,
             children: <Widget>[
               Text(
-                name.toUpperCase(),
+                "Nom Du cavalier: ${name.toUpperCase()}",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
-                mail,
+                "Email: $mail",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                createdAt,
+                "Isncrit depuis le $createdAt",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),

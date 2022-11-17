@@ -19,6 +19,7 @@ class _UserListState extends State<UserList> {
   Future<List> getListUSer() async {
     var userCollection = mongodb.getCollection('users');
     var listOfUser = await userCollection.find().toList();
+    print(listOfUser);
     List items = [];
     for (int i = 0; i < listOfUser.length; i++) {
       var createdAt = listOfUser[i]["createdAt"];
@@ -30,7 +31,7 @@ class _UserListState extends State<UserList> {
         items.add(userCard);
       } else {
         var userCard =
-            UserCard(listOfUser[i]["username"], listOfUser[i]["mail"], "null", listOfUser[i]["image"]);
+            UserCard(listOfUser[i]["username"], listOfUser[i]["mail"], "date non disponible", listOfUser[i]["image"]);
         items.add(userCard);
       }
     }

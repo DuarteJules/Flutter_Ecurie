@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/horse.dart';
+import '../screens/cavaliers_screen.dart';
 import '../screens/course_screen.dart';
-import '../screens/validate_courses.dart';
+import '../screens/validate_courses_screen.dart';
 
 int _selectedIndex = 2;
 class AdminNavigationBar extends StatefulWidget {
@@ -66,6 +67,16 @@ class _NavigationBarState extends State<AdminNavigationBar> {
                   ),
                 );
         break;
+        case 6:
+      Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => const CavaliersSceen(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+        break;
       
     }
     });
@@ -97,7 +108,11 @@ class _NavigationBarState extends State<AdminNavigationBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_alert_sharp),
-            label: 'AcceptCours',
+            label: 'Demandes',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.accessibility_new),
+            label: 'Cavaliers',
           ),
         ],
         currentIndex: _selectedIndex,

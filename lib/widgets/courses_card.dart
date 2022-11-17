@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 import '../providers/mongodb.dart';
-import '../screens/validate_courses.dart';
+import '../screens/validate_courses_screen.dart';
 
 // instance of MongoDB
 var mongodb = DBConnection.getInstance();
