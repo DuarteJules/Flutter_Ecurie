@@ -103,7 +103,8 @@ class MyCustomFormState extends State<MyCustomForm> {
         'password': password,
         'age': age,
         'image': photo,
-        'tel': tel
+        'tel': tel,
+        'createdAt': u['createdAt']
       });
       var userModified = User(name, mail, password, photo, 1, age,  tel );
       UserManager.user = userModified;

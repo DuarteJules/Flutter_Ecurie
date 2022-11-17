@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecurie/services/news_feed.dart';
 
 import '../models/user.dart';
 import '../providers/mongodb.dart';
@@ -38,7 +39,7 @@ class SignupFormState extends State<SignupForm> {
       TextEditingController mailController,
       TextEditingController passwordController,
       TextEditingController imageController) async {
-    // setState(() {
+
     var timestamp = DateTime.now();
     var collection = mongodb.getCollection("users");
     var userNameAlreadyExists =
@@ -53,6 +54,7 @@ class SignupFormState extends State<SignupForm> {
         "createdAt": timestamp,
         "tel": "",
       });
+      Newsfeed().insertNews("L'utilisateur ${nameController.text} a été créé.", 'users');
       return true;
     } else {
       return false;
