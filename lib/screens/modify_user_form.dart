@@ -121,13 +121,15 @@ class MyCustomFormState extends State<MyCustomForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-            // initialValue: user.username,
             decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Nom et prénom'
+                labelText: "Nom d'utilisateur"
             ),
-            validator: (String? value) {
-              return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
             },
 
             controller: nameController,
@@ -137,68 +139,53 @@ class MyCustomFormState extends State<MyCustomForm> {
                 border: OutlineInputBorder(),
                 labelText: 'Mail'
             ),
-            // validator: (value) {
-            //   if (value == null || value.isEmpty) {
-            //     return 'Please enter some text';
-            //   }
-            //   return null;
-            // },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
             controller: mailController,
-            // initialValue: user.mail,
           ),
           TextFormField(
             decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Mot de passe'
             ),
-            // validator: (value) {
-            //   if (value == null || value.isEmpty) {
-            //     return 'Please enter some text';
-            //   }
-            //   return null;
-            // },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
             controller: passwordController,
-            // initialValue: user.password,
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Age'
-            ),
-            // validator: (value) {
-            //   if (value == null || value.isEmpty) {
-            //     return 'Please enter some text';
-            //   }
-            //   return null;
-            // },
-            controller: ageController,
-            // initialValue: user.age.toString(),
           ),
           TextFormField(
             decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Photo"
             ),
-            // validator: (value) {
-            //   if (value == null || value.isEmpty) {
-            //     return 'Please enter some text';
-            //   }
-            //   return null;
-            // },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
             controller: photoController,
-            // initialValue: user.photo,
           ),
+          TextFormField(
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Age'
+            ),
+            controller: ageController,
+          ),
+
           TextFormField(
             decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Numero de telephone'
             ),
-            // validator: (value) {
-            //   if (value == null || value.isEmpty) {
-            //     return 'Please enter some text';
-            //   }
-            //   return null;
-            // },
             controller: telController,
           ),
           Padding(

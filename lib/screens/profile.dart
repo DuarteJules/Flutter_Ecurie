@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
+import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:flutter_ecurie/screens/modify_user_form.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -54,12 +55,13 @@ class _MyProfileState extends State<MyProfile>{
           Text('role : ${user.role}',
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text('age : ${user.age != '' ? user.age : 'Non spécifié'}',
+              style:
+              const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           Text('téléphone : ${user.tel != '' ? user.tel : 'Non spécifié'}',
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text('age : ${user.age != '' ? user.age : 'Non spécifié'}',
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+
           ElevatedButton.icon(
             onPressed: () => Navigator.push(
                 context,
@@ -74,6 +76,7 @@ class _MyProfileState extends State<MyProfile>{
           )
         ]),
       ),
+      bottomNavigationBar: const MyNavigationBar(),
     );
   }
 }
