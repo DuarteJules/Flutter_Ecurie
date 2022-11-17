@@ -34,10 +34,17 @@ class SignupFormState extends State<SignupForm> {
     super.dispose();
   }
 
-  void _createUser(TextEditingController nameController, TextEditingController mailController, TextEditingController passwordController, TextEditingController imageController) {
-    setState(() {
-      var timestamp = DateTime.now();
-      var collection = mongodb.getCollection("users");
+  static _createUser(
+      TextEditingController nameController,
+      TextEditingController mailController,
+      TextEditingController passwordController,
+      TextEditingController imageController) async {
+
+    var timestamp = DateTime.now();
+    var collection = mongodb.getCollection("users");
+    var userNameAlreadyExists =
+        await collection.findOne({"username": nameController.text});
+    if (userNameAlreadyExists == null) {
       collection.insertOne({
         "username": nameController.text,
         "mail": mailController.text,
@@ -47,13 +54,15 @@ class SignupFormState extends State<SignupForm> {
         "createdAt": timestamp,
         "tel": "",
       });
-    });
-
-    Newsfeed().insertNews("L'utilisateur ${nameController.text} a été créé.", 'users');
+      Newsfeed().insertNews("L'utilisateur ${nameController.text} a été créé.", 'users');
+      return true;
+    } else {
+      return false;
+    }
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Form(
       key: _formKey,
       child: Column(
@@ -101,7 +110,8 @@ class SignupFormState extends State<SignupForm> {
             // The validator receives the text that the user has entered.
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Entrez l\'url d\'une image pour votre photo de profil',
+              labelText:
+                  'Entrez l\'url d\'une image pour votre photo de profil',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -111,16 +121,26 @@ class SignupFormState extends State<SignupForm> {
             controller: imageController,
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
                 // If the form is valid, display a snackbar. In the real world,
                 // you'd often call a server or save the information in a database.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Processing Data')),
-                );
-                _createUser(nameController, mailController, passwordController, imageController);
-                Navigator.pop(context, false);
+                var isUserCreated = await _createUser(nameController,
+                    mailController, passwordController, imageController);
+                    print(isUserCreated);
+                if (isUserCreated == false) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text(
+                            'Le nom d\'utilisateur existe déjà, merci d\'en choisir un autre')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Vous avez bien été crée !')),
+                  );
+                  Navigator.pop(context, false);
+                }
               }
             },
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
