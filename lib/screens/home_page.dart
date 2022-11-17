@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
+import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../providers/mongodb.dart';
@@ -40,7 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           if (_connected)
             ElevatedButton.icon(
-              onPressed: () => (print(_connected)),
+              onPressed: ()=>(
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => const MyProfile(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  )
+              ),
               icon: const Icon(Icons.person),
               label: const Text("profile"),
               style: ElevatedButton.styleFrom(

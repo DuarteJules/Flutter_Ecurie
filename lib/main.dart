@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
-
 import 'providers/mongodb.dart';
 
 var mongodb = DBConnection.getInstance();
