@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/modify_user_form.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../models/user.dart';
 
@@ -14,8 +15,17 @@ class MyProfile extends StatefulWidget {
   State<MyProfile> createState() => _MyProfileState();
 }
 
-class _MyProfileState extends State<MyProfile> {
+
+class _MyProfileState extends State<MyProfile>{
+  int _selectedIndex = 2;
+
   var user = UserManager.user;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +57,7 @@ class _MyProfileState extends State<MyProfile> {
           Text('téléphone : ${user.tel != '' ? user.tel : 'Non spécifié'}',
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text('age : ${user.age}',
+          Text('age : ${user.age != '' ? user.age : 'Non spécifié'}',
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ElevatedButton.icon(
