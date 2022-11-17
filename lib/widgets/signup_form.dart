@@ -40,9 +40,11 @@ class SignupFormState extends State<SignupForm> {
       collection.insertOne({
         "username": nameController.text,
         "mail": mailController.text,
+        "age": "",
         "password": passwordController.text,
         "image": imageController.text,
         "createdAt": timestamp,
+        "tel": "",
       });
     });
   }
