@@ -6,7 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/horse.dart';
 import '../screens/cavaliers_screen.dart';
 import '../screens/course_screen.dart';
+import '../screens/validate_contests_screen.dart';
 import '../screens/validate_courses_screen.dart';
+import '../screens/validate_events_screen.dart';
 
 int _selectedIndex = 2;
 class AdminNavigationBar extends StatefulWidget {
@@ -99,7 +101,26 @@ class _NavigationBarState extends State<AdminNavigationBar> {
                   ),
                 );
         break;
-      
+        case 7:
+        Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => const ValidateContestsScreen(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+        break;
+        case 8:
+        Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => const ValidateEventsScreen(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+        break;
     }
     });
   }
@@ -135,6 +156,14 @@ class _NavigationBarState extends State<AdminNavigationBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.accessibility_new),
             label: 'Cavaliers',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_reaction_sharp),
+            label: 'Accept event',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_task_sharp),
+            label: 'Accept conteste',
           ),
         ],
         currentIndex: _selectedIndex,
