@@ -8,6 +8,7 @@ import '../screens/validate_courses_screen.dart';
 
 // instance of MongoDB
 var mongodb = DBConnection.getInstance();
+var timestamp = DateTime.now();
 
 class CoursesCard extends StatelessWidget {
   const CoursesCard(
@@ -49,7 +50,7 @@ class CoursesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      color: status == 1 ? Colors.greenAccent : Colors.white38,
+      color: status == 1 && timestamp.isAfter(DateTime.parse(date)) ? Colors.greenAccent : status == 0 && timestamp.isAfter(DateTime.parse(date)) ? Colors.white38 : Colors.redAccent,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
