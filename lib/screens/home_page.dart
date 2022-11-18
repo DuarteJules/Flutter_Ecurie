@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecurie/models/isAdmin.dart';
-import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:flutter_ecurie/screens/course_screen.dart';
-import 'package:flutter_ecurie/widgets/horses_list.dart';
+import 'package:flutter_ecurie/widgets/current_week_list.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_ecurie/screens/horse.dart';
 
+import '../models/isAdmin.dart';
 import '../providers/adminNavigation_bar.dart';
 import '../providers/mongodb.dart';
 
 import '../providers/navigation_bar.dart';
 import '../widgets/news_list.dart';
-import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
 bool _connected = false;
@@ -99,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             }
                           else
                             {_connected = false,
-                            
+
                             }
                         })),
               },
@@ -133,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Semaines à venir'),
           ),
           Expanded(
-            child: viewFlux == 0 ? const NewsCardList() : const HosrsesList(),
+            child: viewFlux == 0 ? const NewsCardList() : const CurrentWeekCardList(),
           )
         ],
       )),

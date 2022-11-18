@@ -20,15 +20,8 @@ class MyProfile extends StatefulWidget {
 
 
 class _MyProfileState extends State<MyProfile>{
-  int _selectedIndex = 2;
 
   var user = UserManager.user;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
