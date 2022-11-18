@@ -4,114 +4,150 @@ import 'package:flutter_ecurie/screens/event_screen.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/horse.dart';
+import '../models/user_manager.dart';
 import '../screens/course_screen.dart';
 
 int _selectedIndex = 2;
+
 class MyNavigationBar extends StatefulWidget {
-  const MyNavigationBar({ Key? key}) : super(key: key);
+  const MyNavigationBar({Key? key}) : super(key: key);
 
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
 
 class _NavigationBarState extends State<MyNavigationBar> {
-  
-
   void _onItemTapped(int index) {
     // Prevent user from reloading if he is on the same page
     if (index == _selectedIndex) {
       return;
     }
-    
+
     setState(() {
       _selectedIndex = index;
-       switch(_selectedIndex){
-      case 0:
-         case 0:
-           Navigator.pushReplacement(
-             context,
-             PageRouteBuilder(
-               pageBuilder: (context, animation1, animation2) => HorseList(),
-               transitionDuration: Duration.zero,
-               reverseTransitionDuration: Duration.zero,
-             ),
-           );
-           break;
-      case 1:
-        Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => const CourseScreen(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
-        break;
-      case 2:
-      Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => const MyHomePage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-        break;
-       case 3:
-         Navigator.pushReplacement(
-           context,
-           PageRouteBuilder(
-             pageBuilder: (context, animation1, animation2) => const EventList(),
-             transitionDuration: Duration.zero,
-             reverseTransitionDuration: Duration.zero,
-           ),
-         );
-         break;
-       case 4:
-           Navigator.pushReplacement(
-             context,
-             PageRouteBuilder(
-               pageBuilder: (context, animation1, animation2) => const ContestList(),
-               transitionDuration: Duration.zero,
-               reverseTransitionDuration: Duration.zero,
-             ),
-           );
-           break;
-    }
+      switch (_selectedIndex) {
+        case 0:
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => HorseList(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+          break;
+        case 1:
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) =>
+                  const CourseScreen(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+          break;
+        case 2:
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) =>
+                  const MyHomePage(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+          break;
+        case 3:
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) =>
+                  const EventList(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+          break;
+        case 4:
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) =>
+                  const ContestList(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+          break;
+      }
     });
+  }
+
+  void _onTappedHome(int index) {
+    if (index == _selectedIndex) {
+      return;
+    } else {
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => const MyHomePage(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.horse),
-            label: 'Chevaux',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book_outlined),
-            label: 'Cours',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.champagneGlasses),
-            label: 'Evênements',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.trophy),
-            label: 'Concours',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
-        selectedIconTheme: IconThemeData(size: 30),
-        unselectedIconTheme: IconThemeData(size: 20),
-      );
+    return UserManager.isUserConnected
+        ? BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(FontAwesomeIcons.horse),
+                label: 'Chevaux',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.menu_book_outlined),
+                label: 'Cours',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(FontAwesomeIcons.champagneGlasses),
+                label: 'Evênements',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(FontAwesomeIcons.trophy),
+                label: 'Concours',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Color.fromRGBO(255, 143, 0, 1),
+            unselectedItemColor: Colors.black,
+            onTap: _onItemTapped,
+            selectedIconTheme: IconThemeData(size: 30),
+            unselectedIconTheme: IconThemeData(size: 20),
+          )
+        : Container(
+            // color: Colors.black12,
+            height: 85,
+            child: InkWell(
+                onTap: () => _onTappedHome(2),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.home,
+                        color: Colors.amber[800],
+                      ),
+                      Text('Home'),
+                    ],
+                  ),
+                )));
   }
 }

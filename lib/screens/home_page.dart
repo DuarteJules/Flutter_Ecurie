@@ -98,7 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }
                             }
                           else
-                            {_connected = false}
+                            {_connected = false,
+                            
+                            }
                         })),
               },
               icon: const Icon(Icons.login),
@@ -136,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       )),
       // Nav for admin user or not
-      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar:  IsAdmin.admin == 0  ? const MyNavigationBar() : const AdminNavigationBar(),
     );
   }
 }

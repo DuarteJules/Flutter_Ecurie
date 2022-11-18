@@ -102,7 +102,17 @@ class CoursesCard extends StatelessWidget {
                   if (status == 1) {
                     return;
                   } else {
+                    // TODO  IF course accepted -> disable button for suppress course
                     _acceptCourse(idCard);
+                    Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const ValidateCourses(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
                   }
                 },
                 style: ElevatedButton.styleFrom(
