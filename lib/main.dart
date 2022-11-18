@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_ecurie/screens/course_detail_screens.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:flutter_ecurie/screens/horse.dart';
 
