@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/isAdmin.dart';
 import 'package:flutter_ecurie/providers/adminNavigation_bar.dart';
 
+import '../models/user_manager.dart';
+import '../providers/nav_non_user.dart';
 import '../providers/navigation_bar.dart';
 import '../widgets/course_form.dart';
 import '../widgets/login_form.dart';
@@ -37,7 +39,7 @@ class _CourseScreenState extends State<CourseScreen> {
           child: const Text('Créer un cours'),
         ),
       ])),
-      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
     );
   }
 }

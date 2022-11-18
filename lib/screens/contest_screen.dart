@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 
 import '../models/isAdmin.dart';
 import '../providers/mongodb.dart';
+import '../providers/nav_non_user.dart';
 
 var mongodb = DBConnection.getInstance();
 
@@ -497,7 +498,7 @@ class _ContestListState extends State<ContestList> {
           ],
         ),
       ),
-      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

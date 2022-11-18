@@ -3,6 +3,7 @@ import 'package:flutter_ecurie/models/user_manager.dart';
 
 import 'package:flutter_ecurie/models/user.dart';
 import '../providers/mongodb.dart';
+import '../screens/home_page.dart';
 
 // instance of MongoDB
 var mongodb = DBConnection.getInstance();

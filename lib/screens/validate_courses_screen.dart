@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/widgets/asked_courses_list.dart';
 
 import '../models/isAdmin.dart';
+import '../models/user_manager.dart';
 import '../providers/adminNavigation_bar.dart';
+import '../providers/nav_non_user.dart';
 import '../providers/navigation_bar.dart';
 
 class ValidateCourses extends StatefulWidget {
@@ -20,7 +22,7 @@ class _ValidateCoursesState extends State<ValidateCourses> {
         title: Text("Demandes de cours"),
       ),
       body: const AskedCoursesList(),
-      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
     );
   }
 }

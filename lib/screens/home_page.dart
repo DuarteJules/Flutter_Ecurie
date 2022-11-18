@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
+import 'package:flutter_ecurie/providers/nav_non_user.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:flutter_ecurie/screens/course_screen.dart';
 import 'package:flutter_ecurie/widgets/current_week_list.dart';
@@ -9,11 +10,12 @@ import '../models/isAdmin.dart';
 import '../providers/adminNavigation_bar.dart';
 import '../providers/mongodb.dart';
 
+
 import '../providers/navigation_bar.dart';
 import '../widgets/news_list.dart';
 
 var mongodb = DBConnection.getInstance();
-bool _connected = false;
+bool connected = false;
 class MyHomePage extends StatefulWidget {
   static const tag = "Home page";
   const MyHomePage({super.key});
@@ -50,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text("My little pony"),
         centerTitle: false,
         actions: [
-          if (_connected)
+          if (connected)
             ElevatedButton.icon(
               onPressed: ()=>(
                   Navigator.pushReplacement(
@@ -86,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           // If user is connected to see his profile
                           if (response == true)
                             {
-                              _connected = true,
+                              connected = true,
                               // See if user is ADMIN
                               if (UserManager.user.role == 2)
                                 {
@@ -94,9 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }
                             }
                           else
-                            {_connected = false,
-
-                            }
+                            {connected = false}
                         })),
               },
               icon: const Icon(Icons.login),
@@ -134,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       )),
       // Nav for admin user or not
-      bottomNavigationBar:  IsAdmin.admin == 0  ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar:  IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
     );
   }
 }

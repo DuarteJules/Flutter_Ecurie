@@ -84,25 +84,10 @@ class _NavigationBarState extends State<MyNavigationBar> {
     });
   }
 
-  void _onTappedHome(int index) {
-    if (index == _selectedIndex) {
-      return;
-    } else {
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => const MyHomePage(),
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return UserManager.isUserConnected
-        ? BottomNavigationBar(
+    return BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(FontAwesomeIcons.horse),
@@ -131,23 +116,6 @@ class _NavigationBarState extends State<MyNavigationBar> {
             onTap: _onItemTapped,
             selectedIconTheme: IconThemeData(size: 30),
             unselectedIconTheme: IconThemeData(size: 20),
-          )
-        : Container(
-            // color: Colors.black12,
-            height: 85,
-            child: InkWell(
-                onTap: () => _onTappedHome(2),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.home,
-                        color: Colors.amber[800],
-                      ),
-                      Text('Home'),
-                    ],
-                  ),
-                )));
+          );
   }
 }

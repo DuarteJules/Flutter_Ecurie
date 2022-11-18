@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/isAdmin.dart';
 import '../models/user.dart';
 import '../providers/adminNavigation_bar.dart';
+import '../providers/nav_non_user.dart';
 
 class MyProfile extends StatefulWidget {
   static const tag = "profile page";
@@ -72,7 +73,7 @@ class _MyProfileState extends State<MyProfile>{
         ]),
       ),
       // Nav for admin user or not
-      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
     );
   }
 }
