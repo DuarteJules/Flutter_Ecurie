@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 
 import 'package:flutter_ecurie/models/user.dart';
+import 'package:flutter_ecurie/screens/forgotten_password_form.dart';
 import '../providers/mongodb.dart';
 import '../screens/home_page.dart';
 
@@ -77,7 +78,7 @@ class LoginFormState extends State<LoginForm> {
             onPressed: () async  {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
-                
+
                 final isUserCorrect = await _loginUser(nameController, passwordController);
                 if (isUserCorrect == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -102,6 +103,15 @@ class LoginFormState extends State<LoginForm> {
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
             child: const Text('Se connecter'),
           ),
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ForgottenPasswordForm())),
+            style: ElevatedButton.styleFrom(
+                elevation: 0, shape: const StadiumBorder()),
+            child: const Text("Mot de passe oublié"),
+          )
         ],
       ),
     );
