@@ -79,10 +79,8 @@ class MyCustomFormState extends State<MyCustomForm> {
     String photo = photoController.text;
     String tel = telController.text;
 
-    // CardDescription card = CardDescription(name: name, mail: mail, birth: birth, image: image);
 
     var collection = mongodb.getCollection('users');
-    // await collection.update(where.eq('username', user.username), modify.set('username'));
     var u = await collection.findOne({'username': user.username});
     if (u != null) {
       u['username'] = name;
@@ -92,6 +90,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       u['image'] = photo;
       u['tel'] = tel;
 
+      // UpdateOne User with the username found in db
       await collection.updateOne(
           dart.where.eq('username', user.username),
           dart.ModifierBuilder()

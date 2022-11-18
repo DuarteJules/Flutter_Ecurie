@@ -12,6 +12,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  // Switch between login and signup
   int login = 0;
 
   @override
@@ -50,6 +51,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ],
             ),
+            // Render Login widget or Signup widget 
             login == 0 ? const LoginForm() : const SignupForm(),
           ],
         )));

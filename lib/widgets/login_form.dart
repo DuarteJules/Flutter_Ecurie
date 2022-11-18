@@ -65,6 +65,8 @@ class LoginFormState extends State<LoginForm> {
               border: UnderlineInputBorder(),
               labelText: 'Entrez votre mot de passe',
             ),
+            obscureText: true,
+            obscuringCharacter: '*',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Merci de renseigner votre mot de passe';

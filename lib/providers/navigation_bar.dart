@@ -30,7 +30,7 @@ class _NavigationBarState extends State<MyNavigationBar> {
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => HorseList(),
+              pageBuilder: (context, animation1, animation2) => const HorseList(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),

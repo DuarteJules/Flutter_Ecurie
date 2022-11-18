@@ -34,6 +34,7 @@ class _CavaliersSceenState extends State<CavaliersSceen> {
       appBar: AppBar(
         title: Text("Liste Des Cavaliers"),
       ),
+      // Call widget for rendering list of users in stable
       body: const UserList(),
       // Nav for admin user or not
       bottomNavigationBar:

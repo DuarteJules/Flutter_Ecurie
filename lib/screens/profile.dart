@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:flutter_ecurie/screens/modify_user_form.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../models/isAdmin.dart';
-import '../models/user.dart';
 import '../providers/adminNavigation_bar.dart';
 import '../providers/nav_non_user.dart';
 

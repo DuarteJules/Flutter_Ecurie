@@ -100,6 +100,8 @@ class SignupFormState extends State<SignupForm> {
               border: UnderlineInputBorder(),
               labelText: 'Entrez un mot de passe',
             ),
+            obscureText: true,
+            obscuringCharacter: '*',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Merci de renseigner un mot de passe';
