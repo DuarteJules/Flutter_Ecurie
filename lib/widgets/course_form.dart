@@ -61,7 +61,6 @@ class _CourseFormState extends State<CourseForm> {
       "teacher": "François",
       "participants": [],
     });
-
   }
 
   @override

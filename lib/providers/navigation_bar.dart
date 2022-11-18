@@ -30,7 +30,7 @@ class _NavigationBarState extends State<MyNavigationBar> {
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => HorseList(),
+              pageBuilder: (context, animation1, animation2) => const HorseList(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),
@@ -84,38 +84,37 @@ class _NavigationBarState extends State<MyNavigationBar> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.horse),
-                label: 'Chevaux',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.menu_book_outlined),
-                label: 'Cours',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.champagneGlasses),
-                label: 'Evênements',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.trophy),
-                label: 'Concours',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Color.fromRGBO(255, 143, 0, 1),
-            unselectedItemColor: Colors.black,
-            onTap: _onItemTapped,
-            selectedIconTheme: IconThemeData(size: 30),
-            unselectedIconTheme: IconThemeData(size: 20),
-          );
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.horse),
+          label: 'Chevaux',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.menu_book_outlined),
+          label: 'Cours',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.champagneGlasses),
+          label: 'Evênements',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.trophy),
+          label: 'Concours',
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Color.fromRGBO(255, 143, 0, 1),
+      unselectedItemColor: Colors.black,
+      onTap: _onItemTapped,
+      selectedIconTheme: IconThemeData(size: 30),
+      unselectedIconTheme: IconThemeData(size: 20),
+    );
   }
 }

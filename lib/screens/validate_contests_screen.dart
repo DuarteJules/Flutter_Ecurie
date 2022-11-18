@@ -9,7 +9,7 @@ import '../providers/nav_non_user.dart';
 import '../providers/navigation_bar.dart';
 
 class ValidateContestsScreen extends StatefulWidget {
-  const ValidateContestsScreen({ Key? key }) : super(key: key);
+  const ValidateContestsScreen({Key? key}) : super(key: key);
 
   @override
   _ValidateCoursesState createState() => _ValidateCoursesState();
@@ -23,7 +23,12 @@ class _ValidateCoursesState extends State<ValidateContestsScreen> {
         title: Text("Demandes de concours"),
       ),
       body: const AskedContestList(),
-      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
+      bottomNavigationBar:
+          IsAdmin.admin == 0 && UserManager.isUserConnected == true
+              ? const MyNavigationBar()
+              : IsAdmin.admin == 0 && UserManager.isUserConnected == false
+                  ? const NavNonUser()
+                  : const AdminNavigationBar(),
     );
   }
 }

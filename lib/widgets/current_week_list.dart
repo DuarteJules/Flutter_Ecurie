@@ -10,20 +10,20 @@ import 'package:mongo_dart/mongo_dart.dart' as dart;
 import '../providers/mongodb.dart';
 import 'package:intl/intl.dart';
 
-
+// instance of MongoDB
 var mongodb = DBConnection.getInstance();
+
 var userUsername = UserManager.user.username;
 bool userInParticipate = false;
 
-class CurrentWeekCardList extends StatefulWidget{
-  const CurrentWeekCardList({ Key? key }) : super(key: key);
+class CurrentWeekCardList extends StatefulWidget {
+  const CurrentWeekCardList({Key? key}) : super(key: key);
 
   @override
   _CurrentWeekCardListState createState() => _CurrentWeekCardListState();
 }
 
-class _CurrentWeekCardListState extends State<CurrentWeekCardList>{
-
+class _CurrentWeekCardListState extends State<CurrentWeekCardList> {
   // Function to add all events/contests/courses as formatted cards to display
   Future<List> getNewsFiltered() async {
     List resultList = [];
@@ -32,67 +32,89 @@ class _CurrentWeekCardListState extends State<CurrentWeekCardList>{
     var listNewsCardsContests = await CurrentWeekFeed().getContests();
 
     // loops through courses to create cards with retrieved data and adds them to returned List
-    if(listNewsCardsCourses.length != 0){
-      for (int i = 0; i < listNewsCardsCourses.length; i++){
+    if (listNewsCardsCourses.length != 0) {
+      for (int i = 0; i < listNewsCardsCourses.length; i++) {
         var createdAt = listNewsCardsCourses[i]["createdAt"];
         var date = listNewsCardsCourses[i]["date"];
 
-        var formattedDateCreated = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
+        var formattedDateCreated =
+            DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
         var formattedDateDate = DateFormat('yyyy-MM-dd – kk:mm').format(date);
         if (listNewsCardsCourses[i]['participants'].length != 0) {
-          userInParticipate = listNewsCardsCourses[i]['participants'].contains(userUsername);
+          userInParticipate =
+              listNewsCardsCourses[i]['participants'].contains(userUsername);
         }
 
-        var card = CurrentWeekCard('Cours', listNewsCardsCourses[i]['title'], listNewsCardsCourses[i]['description'], formattedDateCreated, formattedDateDate, userInParticipate);
+        var card = CurrentWeekCard(
+            'Cours',
+            listNewsCardsCourses[i]['title'],
+            listNewsCardsCourses[i]['description'],
+            formattedDateCreated,
+            formattedDateDate,
+            userInParticipate);
         resultList.add(card);
       }
     }
 
-
     // loops through events to create cards with retrieved data and adds them to returned List
-    if(listNewsCardsEvents.length != 0){
-      for (int i = 0; i < listNewsCardsEvents.length; i++){
+    if (listNewsCardsEvents.length != 0) {
+      for (int i = 0; i < listNewsCardsEvents.length; i++) {
         var createdAt = listNewsCardsEvents[i]["createdAt"];
         var date = listNewsCardsEvents[i]["date"];
 
-        var formattedDateCreated = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
+        var formattedDateCreated =
+            DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
         var formattedDateDate = DateFormat('yyyy-MM-dd – kk:mm').format(date);
         if (listNewsCardsEvents[i]['participants'].length != 0) {
-          userInParticipate = listNewsCardsEvents[i]['participants'].contains(userUsername);
+          userInParticipate =
+              listNewsCardsEvents[i]['participants'].contains(userUsername);
         }
 
-        var card = CurrentWeekCard("Évènement", listNewsCardsEvents[i]['title'], listNewsCardsEvents[i]['theme'], formattedDateCreated, formattedDateDate, userInParticipate);
+        var card = CurrentWeekCard(
+            "Évènement",
+            listNewsCardsEvents[i]['title'],
+            listNewsCardsEvents[i]['theme'],
+            formattedDateCreated,
+            formattedDateDate,
+            userInParticipate);
         resultList.add(card);
       }
     }
 
-
     // loops through contests to create cards with retrieved data and adds them to returned List
-    if(listNewsCardsContests.length != 0){
-      for (int i = 0; i < listNewsCardsContests.length; i++){
+    if (listNewsCardsContests.length != 0) {
+      for (int i = 0; i < listNewsCardsContests.length; i++) {
         var createdAt = listNewsCardsContests[i]["createdAt"];
         var date = listNewsCardsContests[i]["date"];
 
-        var formattedDateCreated = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
+        var formattedDateCreated =
+            DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
         var formattedDateDate = DateFormat('yyyy-MM-dd – kk:mm').format(date);
-        for(int j = 0; j < listNewsCardsContests[i]['participants'].length; j++){
-          if(listNewsCardsContests[i]['participants'][j]['username'] == userUsername){
+        for (int j = 0;
+            j < listNewsCardsContests[i]['participants'].length;
+            j++) {
+          if (listNewsCardsContests[i]['participants'][j]['username'] ==
+              userUsername) {
             userInParticipate = true;
           }
         }
 
-        var card = CurrentWeekCard('Concours', listNewsCardsContests[i]['title'], listNewsCardsContests[i]['description'], formattedDateCreated, formattedDateDate, userInParticipate);
+        var card = CurrentWeekCard(
+            'Concours',
+            listNewsCardsContests[i]['title'],
+            listNewsCardsContests[i]['description'],
+            formattedDateCreated,
+            formattedDateDate,
+            userInParticipate);
         resultList.add(card);
       }
     }
-
 
     return resultList;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: getNewsFiltered(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {

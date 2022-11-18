@@ -8,9 +8,9 @@ import 'providers/mongodb.dart';
 
 var mongodb = DBConnection.getInstance();
 void main() async {
-  // LOAD DOTENV 
+  // LOAD DOTENV
   await dotenv.load(fileName: ".env");
-  // CONNECT MONGO 
+  // CONNECT MONGO
   await mongodb.connect();
   runApp(const MyApp());
 }
@@ -25,14 +25,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-
       ),
       debugShowCheckedModeBanner: false,
-      routes:
-      {HorseList.tag: (context) => const HorseList(),
+      routes: {
+        HorseList.tag: (context) => const HorseList(),
       },
       home: const MyHomePage(),
     );
   }
 }
-

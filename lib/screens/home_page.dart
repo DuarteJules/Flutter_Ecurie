@@ -10,12 +10,12 @@ import '../models/isAdmin.dart';
 import '../providers/adminNavigation_bar.dart';
 import '../providers/mongodb.dart';
 
-
 import '../providers/navigation_bar.dart';
 import '../widgets/news_list.dart';
 
 var mongodb = DBConnection.getInstance();
 bool connected = false;
+
 class MyHomePage extends StatefulWidget {
   static const tag = "Home page";
   const MyHomePage({super.key});
@@ -62,16 +62,15 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           if (connected)
             ElevatedButton.icon(
-              onPressed: ()=>(
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => const MyProfile(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  )
-              ),
+              onPressed: () => (Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      const MyProfile(),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                ),
+              )),
               icon: const Icon(Icons.person),
               label: const Text("profile"),
               style: ElevatedButton.styleFrom(
@@ -114,8 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: const EdgeInsets.only(
-                    right: 100.0),
+                margin: const EdgeInsets.only(right: 100.0),
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
@@ -126,32 +124,41 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('Flux'),
                 ),
               ),
-
-              connected ? ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    viewFlux = 1;
-                  });
-                },
-                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                child: const Text('Semaines à venir'),
-              ) : ElevatedButton(
-                onPressed: () {
-                  null;
-                },
-                style: ElevatedButton.styleFrom(shape: const StadiumBorder(), primary: Colors.grey),
-                child: const Text('Semaines à venir'),
-              ),
+              connected
+                  ? ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          viewFlux = 1;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: const Text('Semaines à venir'),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        null;
+                      },
+                      style: ElevatedButton.styleFrom(
+                          shape: const StadiumBorder(), primary: Colors.grey),
+                      child: const Text('Semaines à venir'),
+                    ),
             ],
-          )
-          ,
+          ),
           Expanded(
-            child: viewFlux == 0 ? const NewsCardList() : const CurrentWeekCardList(),
+            child: viewFlux == 0
+                ? const NewsCardList()
+                : const CurrentWeekCardList(),
           )
         ],
       )),
       // Nav for admin user or not
-      bottomNavigationBar:  IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
+      bottomNavigationBar:
+          IsAdmin.admin == 0 && UserManager.isUserConnected == true
+              ? const MyNavigationBar()
+              : IsAdmin.admin == 0 && UserManager.isUserConnected == false
+                  ? const NavNonUser()
+                  : const AdminNavigationBar(),
     );
   }
 }

@@ -1,8 +1,6 @@
 import 'dart:math';
 
-
 import 'package:flutter/material.dart';
-
 
 class HorsesCard extends StatelessWidget {
   const HorsesCard(
@@ -28,10 +26,6 @@ class HorsesCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          // TODO Put img when all users will have correct url img
-          // Image(
-          //   image: NetworkImage(image, scale: 5),
-          // ),
           Wrap(
             direction: Axis.vertical,
             children: <Widget>[
@@ -39,11 +33,6 @@ class HorsesCard extends StatelessWidget {
                 name.toUpperCase(),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              // Text(
-              //   mail,
-              //   softWrap: false,
-              //   overflow: TextOverflow.ellipsis,
-              // ),
               Text(
                 createdAt,
                 softWrap: false,

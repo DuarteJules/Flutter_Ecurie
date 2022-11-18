@@ -5,39 +5,38 @@ import 'package:mongo_dart/mongo_dart.dart' as dart;
 import '../providers/mongodb.dart';
 import 'package:intl/intl.dart';
 
-
 var mongodb = DBConnection.getInstance();
 
-class NewsCardList extends StatefulWidget{
-  const NewsCardList({ Key? key }) : super(key: key);
+class NewsCardList extends StatefulWidget {
+  const NewsCardList({Key? key}) : super(key: key);
 
   @override
   _NewsCardListState createState() => _NewsCardListState();
 }
 
-class _NewsCardListState extends State<NewsCardList>{
-
+class _NewsCardListState extends State<NewsCardList> {
   Future<List> getNewsFiltered() async {
     var newsCollection = mongodb.getCollection('feedActuality');
-    var listNewsCards = await newsCollection.find(dart.where.sortBy('createdAt', descending: true)).toList();
+    var listNewsCards = await newsCollection
+        .find(dart.where.sortBy('createdAt', descending: true))
+        .toList();
     List resultList = [];
 
-    for (int i = 0; i < listNewsCards.length; i++){
+    for (int i = 0; i < listNewsCards.length; i++) {
       var createdAt = listNewsCards[i]["createdAt"];
       var formattedDate;
 
       formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
-      var card = NewsCard(listNewsCards[i]['description'], listNewsCards[i]['label'], formattedDate);
+      var card = NewsCard(listNewsCards[i]['description'],
+          listNewsCards[i]['label'], formattedDate);
       resultList.add(card);
     }
 
     return resultList;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: getNewsFiltered(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {

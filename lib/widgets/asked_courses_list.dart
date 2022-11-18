@@ -39,16 +39,17 @@ class _AskedCoursesListState extends State<AskedCoursesList> {
         items.add(courseCard);
       } else {
         var courseCard = CoursesCard(
-            listOfCourses[i]["title"],
-            listOfCourses[i]["description"],
-            listOfCourses[i]["date"],
-            listOfCourses[i]["hour"],
-            listOfCourses[i]["duration"],
-            listOfCourses[i]["discipline"],
-            listOfCourses[i]["place"],
-            "null",
-            listOfCourses[i]["_id"],
-            listOfCourses[i]["status"],);
+          listOfCourses[i]["title"],
+          listOfCourses[i]["description"],
+          listOfCourses[i]["date"],
+          listOfCourses[i]["hour"],
+          listOfCourses[i]["duration"],
+          listOfCourses[i]["discipline"],
+          listOfCourses[i]["place"],
+          "null",
+          listOfCourses[i]["_id"],
+          listOfCourses[i]["status"],
+        );
         items.add(courseCard);
       }
     }

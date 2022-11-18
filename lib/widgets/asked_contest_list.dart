@@ -19,23 +19,23 @@ class AskedContestList extends StatefulWidget {
 class _AskedCoursesListState extends State<AskedContestList> {
   Future<List> getListAskedCourses() async {
     var userCollection = mongodb.getCollection('contest');
-    var listOfCourses = await userCollection.find().toList();
+    var listOfContests = await userCollection.find().toList();
     List items = [];
-    for (int i = 0; i < listOfCourses.length; i++) {
-      var createdAt = listOfCourses[i]["createdAt"];
+    for (int i = 0; i < listOfContests.length; i++) {
+      var createdAt = listOfContests[i]["createdAt"];
       var formatedDate;
-        formatedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
-        var courseCard = ContestCard(
-            listOfCourses[i]["title"],
-            listOfCourses[i]["description"],
-            listOfCourses[i]["date"].toString(),
-            listOfCourses[i]["adress"],
-            listOfCourses[i]["photo"],
-            listOfCourses[i]["participants"],
-            listOfCourses[i]["status"],
-            listOfCourses[i]["_id"],
-            );
-        items.add(courseCard);
+      formatedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
+      var contestCard = ContestCard(
+        listOfContests[i]["title"],
+        listOfContests[i]["description"],
+        listOfContests[i]["date"].toString(),
+        listOfContests[i]["adress"],
+        listOfContests[i]["photo"],
+        listOfContests[i]["participants"],
+        listOfContests[i]["status"],
+        listOfContests[i]["_id"],
+      );
+      items.add(contestCard);
     }
     return items;
   }

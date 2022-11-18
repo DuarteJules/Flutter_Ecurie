@@ -17,7 +17,6 @@ class SignupForm extends StatefulWidget {
   }
 }
 
-
 class SignupFormState extends State<SignupForm> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -40,7 +39,6 @@ class SignupFormState extends State<SignupForm> {
       TextEditingController mailController,
       TextEditingController passwordController,
       TextEditingController imageController) async {
-
     var timestamp = DateTime.now();
     var collection = mongodb.getCollection("users");
     var userNameAlreadyExists =
@@ -56,7 +54,8 @@ class SignupFormState extends State<SignupForm> {
         "tel": "",
         "role": 1
       });
-      Newsfeed().insertNews("L'utilisateur ${nameController.text} a été créé.", 'users');
+      Newsfeed().insertNews(
+          "L'utilisateur ${nameController.text} a été créé.", 'users');
       return true;
     } else {
       return false;
@@ -101,6 +100,8 @@ class SignupFormState extends State<SignupForm> {
               border: UnderlineInputBorder(),
               labelText: 'Entrez un mot de passe',
             ),
+            obscureText: true,
+            obscuringCharacter: '*',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Merci de renseigner un mot de passe';
