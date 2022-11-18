@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecurie/screens/contest_screen.dart';
 import 'package:flutter_ecurie/screens/event_screen.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,6 +67,16 @@ class _NavigationBarState extends State<MyNavigationBar> {
            ),
          );
          break;
+       case 4:
+           Navigator.pushReplacement(
+             context,
+             PageRouteBuilder(
+               pageBuilder: (context, animation1, animation2) => const ContestList(),
+               transitionDuration: Duration.zero,
+               reverseTransitionDuration: Duration.zero,
+             ),
+           );
+           break;
     }
     });
   }

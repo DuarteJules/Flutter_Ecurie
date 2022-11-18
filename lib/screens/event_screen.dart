@@ -6,6 +6,8 @@ import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:intl/intl.dart';
+import 'package:mongo_dart/mongo_dart.dart' as dart;
+
 
 import '../models/isAdmin.dart';
 import '../providers/mongodb.dart';
@@ -21,16 +23,8 @@ class EventList extends StatefulWidget {
   State<EventList> createState() => _EventListState();
 }
 
-const List<String> list = <String>[
-  'Dressage',
-  "Saut d'obstacle",
-  'Endurance',
-  'Compétition'
-];
-
 class _EventListState extends State<EventList> {
   bool _connected = UserManager.isUserConnected;
-  late String dropdownValue = list.first;
   late String DPdropdownValue;
 
   final _formKey = GlobalKey<FormState>();
@@ -97,20 +91,10 @@ class _EventListState extends State<EventList> {
     await collection.updateOne({
       'title': oldEvent.title,
       'photo': oldEvent.photo,
-      'date': DateTime.parse(oldEvent.date),
       'description': oldEvent.description,
       'theme': oldEvent.theme,
       'status': oldEvent.status
-    }, {
-      'title': oldEvent.title,
-      'photo': oldEvent.photo,
-      'date': DateTime.parse(oldEvent.date),
-      'description': oldEvent.description,
-      'theme': oldEvent.theme,
-      'participants': oldEvent.participants,
-      'status': oldEvent.status,
-      'createdAt' : DateTime.now()
-    });
+    }, dart.ModifierBuilder().set('participants', oldEvent.participants));
     setState(() {
       int index = events.indexWhere((element) =>
           element.title == oldEvent.title &&
@@ -225,7 +209,7 @@ class _EventListState extends State<EventList> {
                                           .participants
                                           .contains(
                                               UserManager.user.username) &&
-                                      displayEvents[index].status)
+                                      !displayEvents[index].status)
                                     {
                                       showDialog<String>(
                                           context: context,
