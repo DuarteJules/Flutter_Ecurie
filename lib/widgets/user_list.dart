@@ -18,7 +18,7 @@ class _UserListState extends State<UserList> {
   Future<List> getListUSer() async {
     var userCollection = mongodb.getCollection('users');
     var listOfUser = await userCollection.find().toList();
-    print(listOfUser);
+    
     List items = [];
     for (int i = 0; i < listOfUser.length; i++) {
       var createdAt = listOfUser[i]["createdAt"];

@@ -33,7 +33,6 @@ class LoginFormState extends State<LoginForm> {
 
   static _loginUser(TextEditingController nameController,
       TextEditingController passwordController) async {
-    // print(nameController.text);
     var collection = mongodb.getCollection("users");
     var user = await collection.findOne(
         {"username": nameController.text, "password": passwordController.text});
