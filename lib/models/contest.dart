@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_ecurie/models/contestCategory.dart';
 import 'package:intl/intl.dart';
 
 class Contest{

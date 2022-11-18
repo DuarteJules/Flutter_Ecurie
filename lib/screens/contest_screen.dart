@@ -1,5 +1,4 @@
 import 'package:flutter_ecurie/models/contest.dart';
-import 'package:flutter_ecurie/models/contestCategory.dart';
 import 'package:mongo_dart/mongo_dart.dart' as dart;
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
