@@ -115,6 +115,8 @@ class ForgottenPasswordCustomFormState extends State<ForgottenPasswordCustomForm
                 border: OutlineInputBorder(),
                 labelText: 'Mot de passe'
             ),
+            obscureText: true,
+            obscuringCharacter: '*',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
