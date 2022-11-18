@@ -1,4 +1,5 @@
 import 'package:flutter_ecurie/models/contest.dart';
+import 'package:flutter_ecurie/screens/contest_detail_screen.dart';
 import 'package:mongo_dart/mongo_dart.dart' as dart;
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
@@ -228,90 +229,10 @@ class _ContestListState extends State<ContestList> {
                             elevation: 4,
                             child: InkWell(
                               onTap: () => {
-                                if(displayContests[index].participants.isEmpty){
-                                showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    AlertDialog(
-                                      title: const Text(
-                                          "Participer à l'évènement"),
-                                      content: DropdownButtonFormField<String>(
-                                        value: dropdownValue,
-                                        elevation: 16,
-                                        onChanged: (String? value) {
-                                          // This is called when the user selects an item.
-                                          setState(() {
-                                            dropdownValue = value!;
-                                          });
-                                        },
-                                        items: list.map<DropdownMenuItem<String>>(
-                                                (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () => {
-                                            oldContest = Contest(displayContests[index].title, displayContests[index].description, displayContests[index].date, displayContests[index].adress, displayContests[index].photo,displayContests[index].participants, displayContests[index].status),
-                                            addParticipants(),
-                                            Navigator.pop(context)
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              shape:
-                                              const StadiumBorder()),
-                                          child: const Text(
-                                              "Participer"),
-                                        ),
-                                      ],
-                                    ))
-                                },
-                                displayContests[index].participants.forEach((element) {
-                                  if(element["name"] != UserManager.user.username && displayContests[index].status){
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: const Text(
-                                                  "Participer à l'évènement"),
-                                              content: DropdownButtonFormField<String>(
-                                                value: dropdownValue,
-                                                elevation: 16,
-                                                onChanged: (String? value) {
-                                                  // This is called when the user selects an item.
-                                                  setState(() {
-                                                    dropdownValue = value!;
-                                                  });
-                                                },
-                                                items: list.map<DropdownMenuItem<String>>(
-                                                        (String value) {
-                                                      return DropdownMenuItem<String>(
-                                                        value: value,
-                                                        child: Text(value),
-                                                      );
-                                                    }).toList(),
-                                              ),
-                                              actions: [
-                                                ElevatedButton(
-                                                  onPressed: () => {
-                                                    oldContest = Contest(displayContests[index].title, displayContests[index].description, displayContests[index].date, displayContests[index].adress, displayContests[index].photo,displayContests[index].participants, displayContests[index].status),
-                                                    addParticipants(),
-                                                    Navigator.pop(context)
-                                                  },
-                                                  style: ElevatedButton.styleFrom(
-                                                      elevation: 0,
-                                                      shape:
-                                                      const StadiumBorder()),
-                                                  child: const Text(
-                                                      "Participer"),
-                                                ),
-                                              ],
-                                            ));
-                                  }
-                                })
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ContestDetails(contest: displayContests[index])))
                               },
                               child: Row(
                                 mainAxisAlignment:
