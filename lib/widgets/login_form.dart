@@ -18,7 +18,6 @@ class LoginForm extends StatefulWidget {
   }
 }
 
-
 class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -43,7 +42,6 @@ class LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
       key: _formKey,
       child: Column(
@@ -75,14 +73,16 @@ class LoginFormState extends State<LoginForm> {
             controller: passwordController,
           ),
           ElevatedButton(
-            onPressed: () async  {
+            onPressed: () async {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
-
-                final isUserCorrect = await _loginUser(nameController, passwordController);
+                final isUserCorrect =
+                    await _loginUser(nameController, passwordController);
                 if (isUserCorrect == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Votre nom d\'utilisateur ou mot de passe est incorrecte.')),
+                    const SnackBar(
+                        content: Text(
+                            'Votre nom d\'utilisateur ou mot de passe est incorrecte.')),
                   );
                 } else {
                   // TODO : retreive role of user

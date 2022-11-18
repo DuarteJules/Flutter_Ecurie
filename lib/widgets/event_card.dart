@@ -15,12 +15,11 @@ class EventCard extends StatelessWidget {
     this.photo,
     this.date,
     this.description,
-    this.participants,    
+    this.participants,
     this.title,
     this.status,
     this.idCard,
   );
-
 
   final String theme;
   final String photo;
@@ -30,8 +29,6 @@ class EventCard extends StatelessWidget {
   final String title;
   final bool status;
   final ObjectId idCard;
-  
-  
 
   void _acceptCourse(idCard) async {
     var collection = mongodb.getCollection("events");
@@ -83,14 +80,14 @@ class EventCard extends StatelessWidget {
                     // TODO  IF course accepted -> disable button for suppress course
                     _acceptCourse(idCard);
                     Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          const ValidateCourses(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            const ValidateCourses(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(

@@ -36,7 +36,8 @@ class UserCard extends StatelessWidget {
                   alignment: Alignment.center,
                   child: const Image(
                       // IMG URL DIDN'T Work
-                      image: AssetImage('assets/images/Image_not_available.png')),
+                      image:
+                          AssetImage('assets/images/Image_not_available.png')),
                 );
               }),
           Wrap(

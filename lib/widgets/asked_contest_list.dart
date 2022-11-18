@@ -24,18 +24,18 @@ class _AskedCoursesListState extends State<AskedContestList> {
     for (int i = 0; i < listOfCourses.length; i++) {
       var createdAt = listOfCourses[i]["createdAt"];
       var formatedDate;
-        formatedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
-        var courseCard = ContestCard(
-            listOfCourses[i]["title"],
-            listOfCourses[i]["description"],
-            listOfCourses[i]["date"].toString(),
-            listOfCourses[i]["adress"],
-            listOfCourses[i]["photo"],
-            listOfCourses[i]["participants"],
-            listOfCourses[i]["status"],
-            listOfCourses[i]["_id"],
-            );
-        items.add(courseCard);
+      formatedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
+      var courseCard = ContestCard(
+        listOfCourses[i]["title"],
+        listOfCourses[i]["description"],
+        listOfCourses[i]["date"].toString(),
+        listOfCourses[i]["adress"],
+        listOfCourses[i]["photo"],
+        listOfCourses[i]["participants"],
+        listOfCourses[i]["status"],
+        listOfCourses[i]["_id"],
+      );
+      items.add(courseCard);
     }
     return items;
   }

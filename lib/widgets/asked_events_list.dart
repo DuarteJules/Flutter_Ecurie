@@ -25,18 +25,18 @@ class _AskedCoursesListState extends State<AskedEventList> {
     for (int i = 0; i < listOfCourses.length; i++) {
       var createdAt = listOfCourses[i]["createdAt"];
       var formatedDate;
-        formatedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
-        var courseCard = EventCard(
-            listOfCourses[i]["theme"],
-            listOfCourses[i]["photo"],
-            listOfCourses[i]["date"].toString(),
-            listOfCourses[i]["description"],
-            listOfCourses[i]["participants"],
-            listOfCourses[i]["title"],
-            listOfCourses[i]["status"],
-            listOfCourses[i]["_id"],
-            );
-        items.add(courseCard);
+      formatedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
+      var courseCard = EventCard(
+        listOfCourses[i]["theme"],
+        listOfCourses[i]["photo"],
+        listOfCourses[i]["date"].toString(),
+        listOfCourses[i]["description"],
+        listOfCourses[i]["participants"],
+        listOfCourses[i]["title"],
+        listOfCourses[i]["status"],
+        listOfCourses[i]["_id"],
+      );
+      items.add(courseCard);
     }
     return items;
   }

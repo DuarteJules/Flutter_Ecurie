@@ -50,7 +50,11 @@ class CoursesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      color: status == 1 && timestamp.isAfter(DateTime.parse(date)) ? Colors.greenAccent : status == 0 && timestamp.isAfter(DateTime.parse(date)) ? Colors.white38 : Colors.redAccent,
+      color: status == 1 && timestamp.isAfter(DateTime.parse(date))
+          ? Colors.greenAccent
+          : status == 0 && timestamp.isAfter(DateTime.parse(date))
+              ? Colors.white38
+              : Colors.redAccent,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -106,14 +110,14 @@ class CoursesCard extends StatelessWidget {
                     // TODO  IF course accepted -> disable button for suppress course
                     _acceptCourse(idCard);
                     Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          const ValidateCourses(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            const ValidateCourses(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(

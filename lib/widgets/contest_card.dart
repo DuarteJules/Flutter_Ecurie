@@ -16,7 +16,7 @@ class ContestCard extends StatelessWidget {
     this.date,
     this.adress,
     this.photo,
-    this.participants,    
+    this.participants,
     this.status,
     this.idCard,
   );
@@ -81,14 +81,14 @@ class ContestCard extends StatelessWidget {
                     // TODO  IF course accepted -> disable button for suppress course
                     _acceptCourse(idCard);
                     Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          const ValidateCourses(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            const ValidateCourses(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
