@@ -119,13 +119,19 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
             child: const Text('Flux'),
           ),
-          ElevatedButton(
-            onPressed: () {
+          connected ? ElevatedButton(
+             onPressed: () {
               setState(() {
                 viewFlux = 1;
               });
             },
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+            child: const Text('Semaines à venir'),
+          ) : ElevatedButton(
+            onPressed: () {
+              null;
+            },
+            style: ElevatedButton.styleFrom(shape: const StadiumBorder(), primary: Colors.grey),
             child: const Text('Semaines à venir'),
           ),
           Expanded(
