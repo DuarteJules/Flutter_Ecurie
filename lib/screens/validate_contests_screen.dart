@@ -20,7 +20,7 @@ class _ValidateCoursesState extends State<ValidateContestsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Demandes de cours"),
+        title: Text("Demandes de concours"),
       ),
       body: const AskedContestList(),
       bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),

@@ -9,35 +9,38 @@ import '../screens/validate_courses_screen.dart';
 // instance of MongoDB
 var mongodb = DBConnection.getInstance();
 
-class ContestCard extends StatelessWidget {
-  const ContestCard(
-    this.title,
-    this.description,
-    this.date,
-    this.adress,
+class EventCard extends StatelessWidget {
+  const EventCard(
+    this.theme,
     this.photo,
+    this.date,
+    this.description,
     this.participants,    
+    this.title,
     this.status,
     this.idCard,
   );
 
-  final String title;
-  final String description;
-  final String date;
-  final String adress;
+
+  final String theme;
   final String photo;
+  final String date;
+  final String description;
   final List<dynamic> participants;
+  final String title;
   final bool status;
   final ObjectId idCard;
+  
+  
 
   void _acceptCourse(idCard) async {
-    var collection = mongodb.getCollection("contest");
+    var collection = mongodb.getCollection("events");
     await collection.updateOne(
         where.eq('_id', idCard), ModifierBuilder().set('status', true));
   }
 
   void _declineCourse(idCard) async {
-    var collection = mongodb.getCollection("contest");
+    var collection = mongodb.getCollection("events");
     await collection.deleteOne(<String, Object>{"_id": idCard});
   }
 
@@ -59,17 +62,16 @@ class ContestCard extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
+                "Thème: $theme",
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
                 "Description: $description",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "Date du concours: $date",
-                softWrap: false,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                "Adresse: $adress",
+                "Date de l'événement:  $date",
                 softWrap: false,
                 overflow: TextOverflow.ellipsis,
               ),
