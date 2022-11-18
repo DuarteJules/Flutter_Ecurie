@@ -146,13 +146,20 @@ class _ContestListState extends State<ContestList> {
   }
 
   Color getCardColor(Contest contest){
+    late Color color;
     if(contest.status == true){
-      return Colors.white;
+      color =  Colors.white;
     }
     if(contest.status == false){
-      return Colors.redAccent;
+      color =  Colors.redAccent;
     }
-    return Colors.white;
+    contest.participants.forEach((element) {
+      print(element);
+      if(element["name"] == UserManager.user.username){
+        color = Colors.green;
+      }
+    });
+    return color;
   }
 
   @override
@@ -232,7 +239,7 @@ class _ContestListState extends State<ContestList> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => ContestDetails(contest: displayContests[index])))
+                                        builder: (context) => ContestDetails(contest: displayContests[index]))).then((response) => setState(() => {}))
                               },
                               child: Row(
                                 mainAxisAlignment:
