@@ -4,7 +4,6 @@ import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:mongo_dart/mongo_dart.dart' as dart;
 // import 'package:mongo_dart/mongo_dart.dart';
 
-
 import '../providers/mongodb.dart';
 
 var mongodb = DBConnection.getInstance();
@@ -17,8 +16,7 @@ class ModifyUserForm extends StatefulWidget {
   State<ModifyUserForm> createState() => _ModifyUserFormState();
 }
 
-class _ModifyUserFormState extends State<ModifyUserForm>{
-
+class _ModifyUserFormState extends State<ModifyUserForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,12 +24,9 @@ class _ModifyUserFormState extends State<ModifyUserForm>{
         title: Text("Modifer votre profil"),
       ),
       body: Center(
-          child: Column(
-            children: const [
-              MyCustomForm(),
-            ]
-          )
-      ),
+          child: Column(children: const [
+        MyCustomForm(),
+      ])),
     );
   }
 }
@@ -61,18 +56,17 @@ class MyCustomFormState extends State<MyCustomForm> {
       nameController.value = (TextEditingValue(text: user.username));
       mailController.value = (TextEditingValue(text: user.mail));
       passwordController.value = (TextEditingValue(text: user.password));
-      if(user.age != null){
+      if (user.age != null) {
         ageController.value = (TextEditingValue(text: user.age.toString()));
-      }else{
+      } else {
         ageController.value = (TextEditingValue(text: ''));
       }
       photoController.value = (TextEditingValue(text: user.photo));
-      if(user.tel != null || user.tel == ''){
+      if (user.tel != null || user.tel == '') {
         telController.value = (TextEditingValue(text: user.tel.toString()));
-      }else{
+      } else {
         telController.value = (TextEditingValue(text: ''));
       }
-
     });
     super.initState();
   }
@@ -90,7 +84,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     var collection = mongodb.getCollection('users');
     // await collection.update(where.eq('username', user.username), modify.set('username'));
     var u = await collection.findOne({'username': user.username});
-    if(u != null){
+    if (u != null) {
       u['username'] = name;
       u['mail'] = mail;
       u['password'] = password;
@@ -98,9 +92,17 @@ class MyCustomFormState extends State<MyCustomForm> {
       u['image'] = photo;
       u['tel'] = tel;
 
-      await collection.updateOne(dart.where.eq('username', user.username),dart.ModifierBuilder().set('username', name).set('mail', mail).set('password', password).set('age', age).set('image', photo).set('tel', tel));
-      
-      var userModified = User(name, mail, password, photo, 1, age,  tel );
+      await collection.updateOne(
+          dart.where.eq('username', user.username),
+          dart.ModifierBuilder()
+              .set('username', name)
+              .set('mail', mail)
+              .set('password', password)
+              .set('age', age)
+              .set('image', photo)
+              .set('tel', tel));
+
+      var userModified = User(name, mail, password, photo, 1, age, tel);
       UserManager.user = userModified;
     }
 
@@ -109,7 +111,6 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
       key: _formKey,
       child: Column(
@@ -117,23 +118,18 @@ class MyCustomFormState extends State<MyCustomForm> {
         children: [
           TextFormField(
             decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Nom d'utilisateur"
-            ),
+                border: OutlineInputBorder(), labelText: "Nom d'utilisateur"),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               }
               return null;
             },
-
             controller: nameController,
           ),
           TextFormField(
             decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Mail'
-            ),
+                border: OutlineInputBorder(), labelText: 'Mail'),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
@@ -144,9 +140,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Mot de passe'
-            ),
+                border: OutlineInputBorder(), labelText: 'Mot de passe'),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
@@ -157,9 +151,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Photo"
-            ),
+                border: OutlineInputBorder(), labelText: "Photo"),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
@@ -170,17 +162,12 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Age'
-            ),
+                border: OutlineInputBorder(), labelText: 'Age'),
             controller: ageController,
           ),
-
           TextFormField(
             decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Numero de telephone'
-            ),
+                border: OutlineInputBorder(), labelText: 'Numero de telephone'),
             controller: telController,
           ),
           Padding(

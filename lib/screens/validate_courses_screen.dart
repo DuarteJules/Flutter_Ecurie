@@ -8,7 +8,7 @@ import '../providers/nav_non_user.dart';
 import '../providers/navigation_bar.dart';
 
 class ValidateCourses extends StatefulWidget {
-  const ValidateCourses({ Key? key }) : super(key: key);
+  const ValidateCourses({Key? key}) : super(key: key);
 
   @override
   _ValidateCoursesState createState() => _ValidateCoursesState();
@@ -22,7 +22,12 @@ class _ValidateCoursesState extends State<ValidateCourses> {
         title: Text("Demandes de cours"),
       ),
       body: const AskedCoursesList(),
-      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
+      bottomNavigationBar:
+          IsAdmin.admin == 0 && UserManager.isUserConnected == true
+              ? const MyNavigationBar()
+              : IsAdmin.admin == 0 && UserManager.isUserConnected == false
+                  ? const NavNonUser()
+                  : const AdminNavigationBar(),
     );
   }
 }

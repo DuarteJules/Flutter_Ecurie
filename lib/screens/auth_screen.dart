@@ -27,19 +27,18 @@ class _AuthScreenState extends State<AuthScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(
-                      right: 100.0),
+                  margin: const EdgeInsets.only(right: 100.0),
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
                         login = 0;
                       });
                     },
-                    style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    style:
+                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
                     child: const Text('login'),
                   ),
                 ),
-
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
@@ -51,10 +50,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ],
             ),
-
             login == 0 ? const LoginForm() : const SignupForm(),
           ],
-        ))
-        );
+        )));
   }
 }

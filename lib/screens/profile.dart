@@ -19,9 +19,7 @@ class MyProfile extends StatefulWidget {
   State<MyProfile> createState() => _MyProfileState();
 }
 
-
-class _MyProfileState extends State<MyProfile>{
-
+class _MyProfileState extends State<MyProfile> {
   var user = UserManager.user;
 
   @override
@@ -53,18 +51,16 @@ class _MyProfileState extends State<MyProfile>{
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           Text('age : ${user.age != '' ? user.age : 'Non spécifié'}',
               style:
-              const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           Text('téléphone : ${user.tel != '' ? user.tel : 'Non spécifié'}',
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-
           ElevatedButton.icon(
             onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ModifyUserForm())).then((response) => setState(() => {
-                      user = response
-                    })),
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ModifyUserForm()))
+                .then((response) => setState(() => {user = response})),
             icon: const Icon(Icons.person),
             label: const Text("Modifier mon profil"),
             style: ElevatedButton.styleFrom(
@@ -73,7 +69,12 @@ class _MyProfileState extends State<MyProfile>{
         ]),
       ),
       // Nav for admin user or not
-      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
+      bottomNavigationBar:
+          IsAdmin.admin == 0 && UserManager.isUserConnected == true
+              ? const MyNavigationBar()
+              : IsAdmin.admin == 0 && UserManager.isUserConnected == false
+                  ? const NavNonUser()
+                  : const AdminNavigationBar(),
     );
   }
 }

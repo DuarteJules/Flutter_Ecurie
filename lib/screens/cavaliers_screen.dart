@@ -19,6 +19,7 @@ import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
 bool _connected = false;
+
 class CavaliersSceen extends StatefulWidget {
   const CavaliersSceen({super.key});
 
@@ -27,16 +28,20 @@ class CavaliersSceen extends StatefulWidget {
 }
 
 class _CavaliersSceenState extends State<CavaliersSceen> {
-
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Liste Des Cavaliers"),
       ),
       body: const UserList(),
       // Nav for admin user or not
-      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
+      bottomNavigationBar:
+          IsAdmin.admin == 0 && UserManager.isUserConnected == true
+              ? const MyNavigationBar()
+              : IsAdmin.admin == 0 && UserManager.isUserConnected == false
+                  ? const NavNonUser()
+                  : const AdminNavigationBar(),
     );
   }
 }
