@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../models/course.dart';
 import '../providers/mongodb.dart';
 
 // instance of MongoDB
 var mongodb = DBConnection.getInstance();
 
 class CourseForm extends StatefulWidget {
-  const CourseForm({Key? key}) : super(key: key);
+  const CourseForm({Key? key, required this.displayCourses}) : super(key: key);
 
+  final List<Course> displayCourses;
   @override
   _CourseFormState createState() => _CourseFormState();
 }
@@ -49,7 +51,7 @@ class _CourseFormState extends State<CourseForm> {
     collection.insertOne({
       "title": titleController.text,
       "description": descriptionController.text,
-      "date": dateController.text,
+      "date": DateTime.parse(dateController.text),
       "hour": hourController.text,
       "duration": durationController.text,
       "discipline": disciplineController.text,
@@ -59,6 +61,7 @@ class _CourseFormState extends State<CourseForm> {
       "teacher": "François",
       "participants": [],
     });
+
   }
 
   @override
@@ -88,7 +91,6 @@ class _CourseFormState extends State<CourseForm> {
         TextField(
           controller: dateController, //editing controller of this TextField
           decoration: const InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
               labelText: "Chosissez une date" //label text of field
               ),
           readOnly: true, //set it true, so that user will not able to edit text
@@ -114,7 +116,6 @@ class _CourseFormState extends State<CourseForm> {
         TextField(
           controller: hourController, //editing controller of this TextField
           decoration: const InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
               labelText: "Choisissez une heure" //label text of field
               ),
           readOnly: true, //set it true, so that user will not able to edit text
@@ -197,7 +198,7 @@ class _CourseFormState extends State<CourseForm> {
             }
           },
           style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-          child: const Text('Submit'),
+          child: const Text('Ajouter'),
         ),
       ]),
     );

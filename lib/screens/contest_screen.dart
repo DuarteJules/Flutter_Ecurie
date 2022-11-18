@@ -141,6 +141,16 @@ class _ContestListState extends State<ContestList> {
     });
   }
 
+  Color getCardColor(Contest contest){
+    if(contest.status == true){
+      return Colors.white;
+    }
+    if(contest.status == false){
+      return Colors.redAccent;
+    }
+    return Colors.white;
+  }
+
   @override
   void initState() {
     getEvents();
@@ -208,9 +218,7 @@ class _ContestListState extends State<ContestList> {
                     height: 70,
                     margin: const EdgeInsets.all(3),
                     decoration: BoxDecoration(
-                        color: displayContests[index].status
-                            ? Colors.white
-                            : Colors.redAccent,
+                        color: getCardColor(displayContests[index]),
                         borderRadius: BorderRadius.circular(7)),
                     child: Center(
                         child: Card(
@@ -259,7 +267,7 @@ class _ContestListState extends State<ContestList> {
                                     ))
                                 },
                                 displayContests[index].participants.forEach((element) {
-                                  if(element["name"] != UserManager.user.username && !displayContests[index].status){
+                                  if(element["name"] != UserManager.user.username && displayContests[index].status){
                                     showDialog<String>(
                                         context: context,
                                         builder: (BuildContext context) =>
@@ -319,7 +327,7 @@ class _ContestListState extends State<ContestList> {
                                         children: [
                                           Container(
                                             child: Text(
-                                                "Thème : ${displayContests[index].adress}"),
+                                                "Adresse : ${displayContests[index].adress}"),
                                             margin: const EdgeInsets.only(
                                                 right: 6.0),
                                           ),

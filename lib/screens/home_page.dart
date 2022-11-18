@@ -27,31 +27,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 2;
-
   
   int viewFlux = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-       switch(_selectedIndex){
-      case 0:
-        // Navigator.pushNamed(context, "/first");
-        break;
-      case 1:
-        Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => const CourseScreen(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
-        break;
-    }
-    });
-  }
 
 
   @override
