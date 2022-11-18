@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
+import 'package:flutter_ecurie/providers/nav_non_user.dart';
 import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
@@ -622,7 +623,7 @@ class _HorseListState extends State<HorseList> {
         ),
       ),
       // Nav for admin user or not
-      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

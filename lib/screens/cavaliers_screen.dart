@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/isAdmin.dart';
 import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
+import 'package:flutter_ecurie/providers/nav_non_user.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:flutter_ecurie/screens/course_screen.dart';
 import 'package:flutter_ecurie/widgets/horses_list.dart';
@@ -35,7 +36,7 @@ class _CavaliersSceenState extends State<CavaliersSceen> {
       ),
       body: const UserList(),
       // Nav for admin user or not
-      bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
     );
   }
 }
