@@ -482,9 +482,9 @@ class _CourseScreenState extends State<CourseScreen> {
             ),
           ],
         ),
-
-      ])),
+      ),
       bottomNavigationBar: IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
+
     );
   }
 }
