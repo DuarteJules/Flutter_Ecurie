@@ -87,7 +87,6 @@ class LoginFormState extends State<LoginForm> {
                             'Votre nom d\'utilisateur ou mot de passe est incorrecte.')),
                   );
                 } else {
-                  // TODO : retreive role of user
                   var userLogged = User(
                       isUserCorrect["username"],
                       isUserCorrect["mail"],
@@ -97,7 +96,10 @@ class LoginFormState extends State<LoginForm> {
                       isUserCorrect['age'],
                       isUserCorrect['tel']);
                   UserManager.user = userLogged;
+                  
+                  // Connecting the user in global
                   var userConnected = UserManager.connectUser();
+
                   Navigator.pop(context, userConnected);
                 }
               }

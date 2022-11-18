@@ -35,12 +35,14 @@ class CoursesCard extends StatelessWidget {
   final ObjectId idCard;
   final int status;
 
+  // Course accepted -> status changed in DB
   void _acceptCourse(idCard) async {
     var collection = mongodb.getCollection("courses");
     await collection.updateOne(
         where.eq('_id', idCard), ModifierBuilder().set('status', 1));
   }
 
+  // Course refused -> deleted in DB
   void _declineCourse(idCard) async {
     var collection = mongodb.getCollection("courses");
     await collection.deleteOne(<String, Object>{"_id": idCard});

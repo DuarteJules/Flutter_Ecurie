@@ -20,23 +20,23 @@ class AskedEventList extends StatefulWidget {
 class _AskedCoursesListState extends State<AskedEventList> {
   Future<List> getListAskedCourses() async {
     var userCollection = mongodb.getCollection('events');
-    var listOfCourses = await userCollection.find().toList();
+    var listOfEnvents = await userCollection.find().toList();
     List items = [];
-    for (int i = 0; i < listOfCourses.length; i++) {
-      var createdAt = listOfCourses[i]["createdAt"];
+    for (int i = 0; i < listOfEnvents.length; i++) {
+      var createdAt = listOfEnvents[i]["createdAt"];
       var formatedDate;
       formatedDate = DateFormat('yyyy-MM-dd – kk:mm').format(createdAt);
-      var courseCard = EventCard(
-        listOfCourses[i]["theme"],
-        listOfCourses[i]["photo"],
-        listOfCourses[i]["date"].toString(),
-        listOfCourses[i]["description"],
-        listOfCourses[i]["participants"],
-        listOfCourses[i]["title"],
-        listOfCourses[i]["status"],
-        listOfCourses[i]["_id"],
+      var eventCard = EventCard(
+        listOfEnvents[i]["theme"],
+        listOfEnvents[i]["photo"],
+        listOfEnvents[i]["date"].toString(),
+        listOfEnvents[i]["description"],
+        listOfEnvents[i]["participants"],
+        listOfEnvents[i]["title"],
+        listOfEnvents[i]["status"],
+        listOfEnvents[i]["_id"],
       );
-      items.add(courseCard);
+      items.add(eventCard);
     }
     return items;
   }

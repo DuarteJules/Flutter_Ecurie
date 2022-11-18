@@ -30,13 +30,15 @@ class ContestCard extends StatelessWidget {
   final bool status;
   final ObjectId idCard;
 
-  void _acceptCourse(idCard) async {
+  // Contest accepted -> status changed in DB
+  void _acceptContest(idCard) async {
     var collection = mongodb.getCollection("contest");
     await collection.updateOne(
         where.eq('_id', idCard), ModifierBuilder().set('status', true));
   }
 
-  void _declineCourse(idCard) async {
+  // Contest refused -> deleted in DB
+  void _declineContest(idCard) async {
     var collection = mongodb.getCollection("contest");
     await collection.deleteOne(<String, Object>{"_id": idCard});
   }
@@ -79,7 +81,7 @@ class ContestCard extends StatelessWidget {
                     return;
                   } else {
                     // TODO  IF course accepted -> disable button for suppress course
-                    _acceptCourse(idCard);
+                    _acceptContest(idCard);
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
@@ -99,7 +101,7 @@ class ContestCard extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  _declineCourse(idCard);
+                  _declineContest(idCard);
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(

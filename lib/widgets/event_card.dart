@@ -30,13 +30,15 @@ class EventCard extends StatelessWidget {
   final bool status;
   final ObjectId idCard;
 
-  void _acceptCourse(idCard) async {
+  // Event accepted -> status changed in DB
+  void _acceptEvent(idCard) async {
     var collection = mongodb.getCollection("events");
     await collection.updateOne(
         where.eq('_id', idCard), ModifierBuilder().set('status', true));
   }
 
-  void _declineCourse(idCard) async {
+  // Event refused refused -> deleted in DB
+  void _declineEvent(idCard) async {
     var collection = mongodb.getCollection("events");
     await collection.deleteOne(<String, Object>{"_id": idCard});
   }
@@ -78,7 +80,7 @@ class EventCard extends StatelessWidget {
                     return;
                   } else {
                     // TODO  IF course accepted -> disable button for suppress course
-                    _acceptCourse(idCard);
+                    _acceptEvent(idCard);
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
@@ -98,7 +100,7 @@ class EventCard extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  _declineCourse(idCard);
+                  _declineEvent(idCard);
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(

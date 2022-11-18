@@ -10,7 +10,9 @@ import 'package:mongo_dart/mongo_dart.dart' as dart;
 import '../providers/mongodb.dart';
 import 'package:intl/intl.dart';
 
+// instance of MongoDB
 var mongodb = DBConnection.getInstance();
+
 var userUsername = UserManager.user.username;
 bool userInParticipate = false;
 
