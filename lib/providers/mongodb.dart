@@ -10,7 +10,7 @@ class DBConnection {
   late Db _db;
 
   static DBConnection getInstance() {
-    if(_isInstance) return DBConnection._instance;
+    if (_isInstance) return DBConnection._instance;
 
     DBConnection._instance = DBConnection();
     DBConnection._isInstance = true;
@@ -18,7 +18,7 @@ class DBConnection {
   }
 
   Future<void> connect() async {
-    if(_isInit == false) {
+    if (_isInit == false) {
       _isInit = true;
       _db = Db(_getConnectionString());
       await _db.open();

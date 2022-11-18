@@ -18,7 +18,7 @@ class NavNonUser extends StatefulWidget {
 
 class _NavigationBarState extends State<NavNonUser> {
   late final bool isConnected;
-  
+
   void _onTappedHome(int index) {
     if (index == _selectedIndex) {
       return;
