@@ -130,6 +130,19 @@ class _EventListState extends State<EventList> {
     });
   }
 
+  Color getCardColor(Event event){
+    if(event.participants.contains(UserManager.user.username)){
+      return Colors.green;
+    }
+    if(event.status == true){
+      return Colors.white;
+    }
+    if(event.status == false){
+      return Colors.redAccent;
+    }
+    return Colors.white;
+  }
+
   @override
   void initState() {
     getEvents();
@@ -197,20 +210,14 @@ class _EventListState extends State<EventList> {
                       height: 70,
                       margin: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
-                          color: displayEvents[index].status
-                              ? Colors.white
-                              : Colors.redAccent,
+                          color: getCardColor(displayEvents[index]),
                           borderRadius: BorderRadius.circular(7)),
                       child: Center(
                           child: Card(
                               elevation: 4,
                               child: InkWell(
                                 onTap: () => {
-                                  if (!displayEvents[index]
-                                          .participants
-                                          .contains(
-                                              UserManager.user.username) &&
-                                      !displayEvents[index].status)
+                                  if (!displayEvents[index].participants.contains(UserManager.user.username) && displayEvents[index].status)
                                     {
                                       showDialog<String>(
                                           context: context,

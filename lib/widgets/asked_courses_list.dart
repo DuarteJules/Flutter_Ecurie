@@ -28,7 +28,7 @@ class _AskedCoursesListState extends State<AskedCoursesList> {
         var courseCard = CoursesCard(
             listOfCourses[i]["title"],
             listOfCourses[i]["description"],
-            listOfCourses[i]["date"],
+            DateFormat('yyyy-MM-dd').format(listOfCourses[i]["date"]),
             listOfCourses[i]["hour"],
             listOfCourses[i]["duration"],
             listOfCourses[i]["discipline"],
