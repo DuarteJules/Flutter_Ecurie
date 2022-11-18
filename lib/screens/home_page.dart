@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecurie/models/isAdmin.dart';
-import 'package:flutter_ecurie/models/user.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
+import 'package:flutter_ecurie/providers/nav_non_user.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:flutter_ecurie/screens/course_screen.dart';
-import 'package:flutter_ecurie/widgets/horses_list.dart';
+import 'package:flutter_ecurie/widgets/current_week_list.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_ecurie/screens/horse.dart';
 
+import '../models/isAdmin.dart';
 import '../providers/adminNavigation_bar.dart';
 import '../providers/mongodb.dart';
 
+
 import '../providers/navigation_bar.dart';
 import '../widgets/news_list.dart';
-import '../widgets/user_list.dart';
 
 var mongodb = DBConnection.getInstance();
-bool _connected = false;
+bool connected = false;
 class MyHomePage extends StatefulWidget {
   static const tag = "Home page";
   const MyHomePage({super.key});
@@ -39,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text("My little pony"),
         centerTitle: false,
         actions: [
-          if (_connected)
+          if (connected)
             ElevatedButton.icon(
               onPressed: ()=>(
                   Navigator.pushReplacement(
@@ -67,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           // If user is connected to see his profile
                           if (response == true)
                             {
-                              _connected = true,
+                              connected = true,
                               // See if user is ADMIN
                               if (UserManager.user.role == 2)
                                 {
@@ -75,9 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }
                             }
                           else
-                            {_connected = false,
-                            
-                            }
+                            {connected = false}
                         })),
               },
               icon: const Icon(Icons.login),
@@ -100,22 +96,28 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
             child: const Text('Flux'),
           ),
-          ElevatedButton(
-            onPressed: () {
+          connected ? ElevatedButton(
+             onPressed: () {
               setState(() {
                 viewFlux = 1;
               });
             },
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
             child: const Text('Semaines à venir'),
+          ) : ElevatedButton(
+            onPressed: () {
+              null;
+            },
+            style: ElevatedButton.styleFrom(shape: const StadiumBorder(), primary: Colors.grey),
+            child: const Text('Semaines à venir'),
           ),
           Expanded(
-            child: viewFlux == 0 ? const NewsCardList() : const HosrsesList(),
+            child: viewFlux == 0 ? const NewsCardList() : const CurrentWeekCardList(),
           )
         ],
       )),
       // Nav for admin user or not
-      bottomNavigationBar:  IsAdmin.admin == 0  ? const MyNavigationBar() : const AdminNavigationBar(),
+      bottomNavigationBar:  IsAdmin.admin == 0 && UserManager.isUserConnected == true ? const MyNavigationBar() : IsAdmin.admin == 0 && UserManager.isUserConnected == false ? const NavNonUser() : const AdminNavigationBar(),
     );
   }
 }
