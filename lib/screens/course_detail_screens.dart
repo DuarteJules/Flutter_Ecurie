@@ -128,13 +128,19 @@ class _CourseDetailsState extends State<CourseDetails> {
                     fontSize: 20.0,
                   )),
                 ),
+                Flexible(
+                  flex: 2,
+                  child: Text("Lieu : ${widget.course.place}", style: const TextStyle(
+                    fontSize: 20.0,
+                  )),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text("Date : ${widget.course.date}", style: const TextStyle(
                   fontSize: 20.0,
                 )),
-                    Text("Date : ${widget.course.duration}", style: const TextStyle(
+                    Text("Durée : ${widget.course.duration}", style: const TextStyle(
                       fontSize: 20.0,
                     )),
                   ],

@@ -4,6 +4,7 @@ import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/providers/adminNavigation_bar.dart';
 import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
+import 'package:flutter_ecurie/screens/event_details_screen.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:mongo_dart/mongo_dart.dart' as dart;
@@ -219,45 +220,10 @@ class _EventListState extends State<EventList> {
                               elevation: 4,
                               child: InkWell(
                                 onTap: () => {
-                                  if (!displayEvents[index].participants.contains(UserManager.user.username) && displayEvents[index].status)
-                                    {
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              AlertDialog(
-                                                title: const Text(
-                                                    "Participer à l'évènement"),
-                                                actions: [
-                                                  ElevatedButton(
-                                                    onPressed: () => {
-                                                      oldEvent = Event(
-                                                          displayEvents[index]
-                                                              .theme,
-                                                          displayEvents[index]
-                                                              .photo,
-                                                          displayEvents[index]
-                                                              .date,
-                                                          displayEvents[index]
-                                                              .description,
-                                                          displayEvents[index]
-                                                              .participants,
-                                                          displayEvents[index]
-                                                              .title,
-                                                          displayEvents[index]
-                                                              .status),
-                                                      addParticipants(),
-                                                      Navigator.pop(context)
-                                                    },
-                                                    style: ElevatedButton.styleFrom(
-                                                        elevation: 0,
-                                                        shape:
-                                                            const StadiumBorder()),
-                                                    child: const Text(
-                                                        "Participer"),
-                                                  ),
-                                                ],
-                                              ))
-                                    }
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EventDetails(event: displayEvents[index])))
                                 },
                                 child: Row(
                                   mainAxisAlignment:
