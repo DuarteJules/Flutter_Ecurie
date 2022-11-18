@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Event{
   late String theme;
   late String photo;
@@ -11,6 +13,6 @@ class Event{
       this.title, this.status);
 
   fromJson(Map<String, dynamic> json){
-    return Event(json['theme'], json['photo'], json['date'].toString(), json["description"] , List<String>.from(json['participants'] as List), json['title'], json['status'] );
+    return Event(json['theme'], json['photo'], DateFormat('yyyy-MM-dd').format(json["date"]), json["description"] , List<String>.from(json['participants'] as List), json['title'], json['status'] );
   }
 }

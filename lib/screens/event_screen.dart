@@ -1,11 +1,13 @@
 import 'package:flutter_ecurie/models/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
+import 'package:flutter_ecurie/providers/adminNavigation_bar.dart';
 import 'package:flutter_ecurie/providers/navigation_bar.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:intl/intl.dart';
 
+import '../models/isAdmin.dart';
 import '../providers/mongodb.dart';
 
 var mongodb = DBConnection.getInstance();
@@ -66,7 +68,8 @@ class _EventListState extends State<EventList> {
       'description': descriptionController.text,
       'title': titleController.text,
       'status': false,
-      'participants': [UserManager.user.username]
+      'participants': [UserManager.user.username],
+      'createdAt' : DateTime.now()
     });
     setState(() {
       Event event = Event(
@@ -91,7 +94,7 @@ class _EventListState extends State<EventList> {
   void addParticipants() async {
     oldEvent.participants.add(UserManager.user.username);
     var collection = mongodb.getCollection("events");
-    await collection.replaceOne({
+    await collection.updateOne({
       'title': oldEvent.title,
       'photo': oldEvent.photo,
       'date': DateTime.parse(oldEvent.date),
@@ -106,6 +109,7 @@ class _EventListState extends State<EventList> {
       'theme': oldEvent.theme,
       'participants': oldEvent.participants,
       'status': oldEvent.status,
+      'createdAt' : DateTime.now()
     });
     setState(() {
       int index = events.indexWhere((element) =>
@@ -391,15 +395,9 @@ class _EventListState extends State<EventList> {
                                                   lastDate: DateTime(2101));
 
                                           if (pickedDate != null) {
-                                            print(
-                                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                                             String formattedDate =
                                                 DateFormat('yyyy-MM-dd')
                                                     .format(pickedDate);
-                                            print(
-                                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                                            //you can implement different kind of Date Format here according to your requirement
-
                                             setState(() {
                                               dateController.text =
                                                   formattedDate; //set output date to TextField value.
@@ -462,7 +460,7 @@ class _EventListState extends State<EventList> {
             ],
           ),
         ),
-        bottomNavigationBar: const MyNavigationBar()
+        bottomNavigationBar: IsAdmin.admin == 0 ? const MyNavigationBar() : const AdminNavigationBar(),
         // This trailing comma makes auto-formatting nicer for build methods.
         );
   }
