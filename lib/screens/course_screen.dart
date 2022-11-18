@@ -4,12 +4,12 @@ import 'package:flutter_ecurie/models/isAdmin.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/providers/adminNavigation_bar.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
+import 'package:flutter_ecurie/screens/course_detail_screens.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
 import 'package:flutter_ecurie/services/news_feed.dart';
 import 'package:intl/intl.dart';
 import 'package:mongo_dart/mongo_dart.dart' as dart;
 
-import '../models/user_manager.dart';
 import '../providers/nav_non_user.dart';
 import '../providers/navigation_bar.dart';
 
@@ -217,32 +217,10 @@ class _CourseScreenState extends State<CourseScreen> {
                             elevation: 4,
                             child: InkWell(
                               onTap: () => {
-                                if (!displayCourses[index].participants.contains(UserManager.user.username) && displayCourses[index].status)
-                                  {
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: const Text(
-                                                  "Participer au cour"),
-                                              actions: [
-                                                ElevatedButton(
-                                                  onPressed: () => {
-                                                    oldCourse = Course(displayCourses[index].title, displayCourses[index].description, displayCourses[index].date,displayCourses[index].duration, displayCourses[index].discipline ,displayCourses[index].place,displayCourses[index].status, displayCourses[index].participants),
-                                                    addParticipants(),
-                                                    Navigator.pop(context)
-                                                  },
-                                                  style: ElevatedButton.styleFrom(
-                                                      elevation: 0,
-                                                      shape:
-                                                          const StadiumBorder()),
-                                                  child:
-                                                      const Text("Participer"),
-
-                                                ),
-                                              ],
-                                            ))
-                                  }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CourseDetails(course: displayCourses[index])))
                               },
                               child: Row(
                                 mainAxisAlignment:
