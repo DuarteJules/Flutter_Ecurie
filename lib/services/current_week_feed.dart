@@ -2,7 +2,6 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 import '../providers/mongodb.dart';
 
-
 var mongodb = DBConnection.getInstance();
 var courses_collection = mongodb.getCollection('courses');
 var contests_collection = mongodb.getCollection('contest');
@@ -22,25 +21,37 @@ DateTime today = DateTime.now();
 DateTime firstDayOfWeek = findFirstDateOfTheWeek(today);
 DateTime lastDayOfWeek = findLastDateOfTheWeek(today);
 
-
-class CurrentWeekFeed{
-
+class CurrentWeekFeed {
   // Function to get all validated events sorted by date (descending)
-  getEvents(){
-    var events = events_collection.find(where.inRange('date', firstDayOfWeek, lastDayOfWeek).eq("status", true).sortBy("date")).toList();
+  getEvents() {
+    var events = events_collection
+        .find(where
+            .inRange('date', firstDayOfWeek, lastDayOfWeek)
+            .eq("status", true)
+            .sortBy("date"))
+        .toList();
     return events;
   }
 
   // Function to get all validated courses sorted by date (descending)
-  getCourses(){
-    var courses = courses_collection.find(where.inRange('date', firstDayOfWeek, lastDayOfWeek).eq("status", 1).sortBy("date")).toList();
+  getCourses() {
+    var courses = courses_collection
+        .find(where
+            .inRange('date', firstDayOfWeek, lastDayOfWeek)
+            .eq("status", 1)
+            .sortBy("date"))
+        .toList();
     return courses;
   }
 
   // Function to get all validated contests sorted by date (descending)
-  getContests(){
-    var contests = contests_collection.find(where.inRange('date', firstDayOfWeek, lastDayOfWeek).eq("status", true).sortBy("date")).toList();
+  getContests() {
+    var contests = contests_collection
+        .find(where
+            .inRange('date', firstDayOfWeek, lastDayOfWeek)
+            .eq("status", true)
+            .sortBy("date"))
+        .toList();
     return contests;
   }
-
 }
