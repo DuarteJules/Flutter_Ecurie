@@ -100,7 +100,7 @@ class LoginFormState extends State<LoginForm> {
               }
             },
             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-            child: const Text('Submit'),
+            child: const Text('Se connecter'),
           ),
         ],
       ),

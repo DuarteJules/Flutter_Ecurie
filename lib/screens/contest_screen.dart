@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import '../models/isAdmin.dart';
 import '../providers/mongodb.dart';
 import '../providers/nav_non_user.dart';
+import '../services/news_feed.dart';
 
 var mongodb = DBConnection.getInstance();
 
@@ -91,6 +92,7 @@ class _ContestListState extends State<ContestList> {
     photoController.text = "";
     descriptionController.text = "";
     titleController.text = "";
+    Newsfeed().insertNews("La compétition ${titleController.text} a été créé.", 'contest');
   }
 
   void addParticipants() async {

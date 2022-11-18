@@ -23,24 +23,35 @@ class _AuthScreenState extends State<AuthScreen> {
         body: Center(
             child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  login = 0;
-                });
-              },
-              style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-              child: const Text('login'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                      right: 100.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        login = 0;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    child: const Text('login'),
+                  ),
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      login = 1;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                  child: const Text('signup'),
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  login = 1;
-                });
-              },
-              style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-              child: const Text('signup'),
-            ),
+
             login == 0 ? const LoginForm() : const SignupForm(),
           ],
         ))

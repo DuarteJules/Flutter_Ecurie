@@ -87,30 +87,41 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
           child: Column(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                viewFlux = 0;
-              });
-            },
-            style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-            child: const Text('Flux'),
-          ),
-          connected ? ElevatedButton(
-             onPressed: () {
-              setState(() {
-                viewFlux = 1;
-              });
-            },
-            style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-            child: const Text('Semaines à venir'),
-          ) : ElevatedButton(
-            onPressed: () {
-              null;
-            },
-            style: ElevatedButton.styleFrom(shape: const StadiumBorder(), primary: Colors.grey),
-            child: const Text('Semaines à venir'),
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                    right: 100.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      viewFlux = 0;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                  child: const Text('Flux'),
+                ),
+              ),
+
+              connected ? ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    viewFlux = 1;
+                  });
+                },
+                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                child: const Text('Semaines à venir'),
+              ) : ElevatedButton(
+                onPressed: () {
+                  null;
+                },
+                style: ElevatedButton.styleFrom(shape: const StadiumBorder(), primary: Colors.grey),
+                child: const Text('Semaines à venir'),
+              ),
+            ],
+          )
+          ,
           Expanded(
             child: viewFlux == 0 ? const NewsCardList() : const CurrentWeekCardList(),
           )

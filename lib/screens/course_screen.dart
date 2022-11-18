@@ -5,13 +5,13 @@ import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/providers/adminNavigation_bar.dart';
 import 'package:flutter_ecurie/screens/auth_screen.dart';
 import 'package:flutter_ecurie/screens/profile.dart';
+import 'package:flutter_ecurie/services/news_feed.dart';
 import 'package:intl/intl.dart';
 import 'package:mongo_dart/mongo_dart.dart' as dart;
 
 import '../models/user_manager.dart';
 import '../providers/nav_non_user.dart';
 import '../providers/navigation_bar.dart';
-import '../widgets/course_form.dart';
 
 class CourseScreen extends StatefulWidget {
   const CourseScreen({Key? key}) : super(key: key);
@@ -87,6 +87,8 @@ class _CourseScreenState extends State<CourseScreen> {
       durationController.text = "";
       hourController.text = "";
     });
+    Newsfeed().insertNews("Le cours ${titleController.text} a été créé.", 'cours');
+
   }
 
   void addParticipants() async {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecurie/models/user_manager.dart';
 import 'package:flutter_ecurie/providers/nav_non_user.dart';
 import 'package:flutter_ecurie/providers/navigation_bar.dart';
+import 'package:flutter_ecurie/services/news_feed.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_ecurie/screens/home_page.dart';
 import 'package:flutter_ecurie/models/horse.dart';
@@ -94,6 +95,8 @@ class _HorseListState extends State<HorseList> {
     robeController.text = "";
     sexController.text = "";
     raceController.text = "";
+    Newsfeed().insertNews("Le cheval ${nameController.text} a été ajouté a l'écurie.", 'horse');
+
   }
 
   void takeAllHorses() {
